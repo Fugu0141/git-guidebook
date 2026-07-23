@@ -14,8 +14,9 @@ Read these files before making substantial changes:
 2. `docs/CURRICULUM.md`
 3. `docs/CONTENT_GUIDE.md`
 4. `docs/SCREENSHOT_GUIDE.md`
-5. `ROADMAP.md`
-6. `docs/CODEX_EXECUTION_PLAN.md`
+5. `docs/SCREENSHOT_PLACEHOLDER_SPEC.md`
+6. `ROADMAP.md`
+7. `docs/CODEX_EXECUTION_PLAN.md`
 
 When documents conflict, prefer this order:
 
@@ -77,6 +78,11 @@ If a required script is missing, add a sensible script during project initializa
 - Raw screenshots belong in `assets/screenshots/raw/`.
 - Published screenshots belong in `public/images/screenshots/`.
 - Never add secrets, personal information, private repository data, or local usernames.
+- When a lesson would benefit from a screenshot that is not yet supplied, place a colored `ScreenshotPlaceholder` at the exact final image position.
+- A screenshot placeholder must show the planned filename, purpose, required state, capture action, crop range, excluded information, and draft alt text.
+- Register every placeholder in `docs/SCREENSHOT_REQUESTS.md` using the filename as the identifier.
+- Do not substitute a generic mock screenshot or move all requests to the end of a lesson.
+- Follow `docs/SCREENSHOT_PLACEHOLDER_SPEC.md` for implementation and replacement rules.
 - Torafugu-chan is a future enhancement, not an MVP blocker.
 - Build reusable callout components so a character can be added later without rewriting lesson content.
 
@@ -99,14 +105,13 @@ Do not replace working code merely to match personal preference. Do not make unr
 Stop and document the blocker instead of guessing when:
 
 - a decision affects licensing or legal ownership;
-- a required screenshot or original illustration is unavailable;
 - GitHub permissions prevent deployment configuration;
 - an external service requires credentials;
 - two source-of-truth documents materially contradict each other;
 - a destructive repository operation would be required;
 - tests reveal an unresolved requirement ambiguity that changes learner-facing behavior.
 
-For missing screenshots, implement the layout using a clearly labeled placeholder component and add the exact requested capture to `docs/SCREENSHOT_REQUESTS.md`.
+A missing screenshot is **not** a stop condition. Implement the page with a `ScreenshotPlaceholder` and add the exact request to `docs/SCREENSHOT_REQUESTS.md`.
 
 ## Definition of done
 
@@ -118,4 +123,5 @@ A change is done when:
 - all available automated checks pass;
 - production build succeeds;
 - internal links work under the GitHub Pages base path;
+- screenshot placeholders and the request list are synchronized;
 - documentation and execution-plan status are updated.
