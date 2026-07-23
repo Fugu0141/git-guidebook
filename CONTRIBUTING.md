@@ -76,7 +76,28 @@ Pull Requestには次の内容を書いてください。
 
 ## 開発環境
 
-技術構成の正式決定後に、セットアップ手順とコマンドを追記します。
+Node.js 22以上とnpmを使用します。
+
+```bash
+npm ci
+npm run dev
+```
+
+Pull Requestを作る前に、次をすべて実行してください。
+
+```bash
+npm run format:check
+npm run lint
+npm run typecheck
+npm test
+npm run build
+npm run check:links
+npm audit
+```
+
+サイトはAstro + TypeScript + MDXで構成し、GitHub Pagesのproject path `/git-guidebook/` を前提にしています。内部リンクや公開アセットはbase pathを外さないでください。
+
+教材へスクリーンショットを追加・差し替える場合は、[`docs/SCREENSHOT_GUIDE.md`](docs/SCREENSHOT_GUIDE.md) と [`docs/SCREENSHOT_PLACEHOLDER_SPEC.md`](docs/SCREENSHOT_PLACEHOLDER_SPEC.md) に従い、[`docs/SCREENSHOT_REQUESTS.md`](docs/SCREENSHOT_REQUESTS.md) も同じファイル名で更新してください。
 
 ## 行動上のお願い
 

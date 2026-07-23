@@ -1,0 +1,111 @@
+---
+lesson: 2
+title: "リポジトリを作成する"
+description: "GitHub上に練習用のリモートリポジトリを用意します。"
+goals:
+  - "Repository name、公開範囲、READMEの意味を判断できる"
+  - "GitHub上にリモートリポジトリを作成できる"
+draft: false
+---
+
+import Callout from "../../components/Callout.astro";
+import OptionalDetails from "../../components/OptionalDetails.astro";
+import Quiz from "../../components/Quiz.astro";
+import ScreenshotPlaceholder from "../../components/ScreenshotPlaceholder.astro";
+import StateDiagram from "../../components/StateDiagram.astro";
+
+## なぜリポジトリを作るのか
+
+これから作るプロジェクトのファイルと履歴を、GitHub上で保管する場所が必要です。最初にリモートリポジトリを作ると、次のレッスンで安全に端末へCloneできます。
+
+## 操作前の状態
+
+学習用の作業フォルダ、ローカルリポジトリ、リモートリポジトリはまだありません。
+
+<StateDiagram
+  title="作成前"
+  caption="GitHub上にも練習用の履歴はない"
+  states={[
+    { label: "作業フォルダ", detail: "なし", status: "same" },
+    { label: "ローカル", detail: "なし", status: "same" },
+    { label: "GitHub", detail: "作成前", status: "changed" }
+  ]}
+/>
+
+## 手順：GitHubで作成する
+
+1. GitHubにサインインし、画面右上の **＋** から **New repository** を開きます。
+2. **Repository name** に `git-guidebook-practice` と入力します。
+3. **Description** に「Git Guidebookの練習用リポジトリ」と入力します。
+4. 公開してよい練習内容だけなら **Public** を選びます。公開したくない場合は **Private** でも学習できます。
+5. **Add a README file** をオンにします。
+6. `.gitignore` とLicenseは今回は **None** のままにします。
+7. 入力内容を確認し、**Create repository** を選びます。
+
+<ScreenshotPlaceholder
+  filename="lesson-02-step-01-create-repository.png"
+  title="GitHubの新規リポジトリ作成画面"
+  description="リポジトリ名、公開範囲、READMEの選択位置と作成前の入力内容を確認するため"
+  requiredState={[
+    "教材専用のGitHubアカウントでサインイン済み",
+    "Repository name: git-guidebook-practice",
+    "Description入力済み",
+    "Add a README fileがオン",
+    ".gitignoreとLicenseはNone"
+  ]}
+  capture="Create repositoryを押す直前で撮影する"
+  crop="Repository nameからCreate repositoryボタンまで、選択状態が読める範囲"
+  exclude="メールアドレス、通知、実在する非公開リポジトリ名、個人名、アクセストークン"
+  altDraft="GitHubの新規リポジトリ作成画面。git-guidebook-practiceという名前とREADME追加が設定され、作成ボタンを押す直前の状態"
+  priority="required"
+  variant="before"
+/>
+
+<Callout type="warning" title="公開範囲を確認">
+  Publicは誰でも閲覧できます。個人情報、授業課題の未公開内容、秘密情報は入れないでください。迷う場合はPrivateを選びます。
+</Callout>
+
+## 操作後の状態
+
+GitHub上にREADMEを含むリモートリポジトリが作られました。まだ端末内には作業フォルダもローカルリポジトリもありません。
+
+<StateDiagram
+  title="作成後"
+  caption="変わったのはGitHub上だけ"
+  states={[
+    { label: "作業フォルダ", detail: "まだない", status: "same" },
+    { label: "ローカル", detail: "まだない", status: "same" },
+    { label: "GitHub", detail: "READMEを含む履歴ができた", status: "changed" }
+  ]}
+/>
+
+## 内部で起きたこと
+
+GitHubがリモートリポジトリを作り、READMEを追加する最初のCommitも作成しました。READMEは、このリポジトリが何のためにあるかを訪問者へ伝える説明書です。
+
+<OptionalDetails summary=".gitignoreとLicenseはなぜ選ばなかった？">
+  `.gitignore`はGitで追跡しないファイルを指定します。Licenseは他の人がコードや文章を利用できる条件を示します。用途ごとの判断が必要なので、この練習では追加しません。特に実プロジェクトのLicenseは所有者が決めます。
+</OptionalDetails>
+
+## よくある失敗
+
+同じ名前のリポジトリがすでにあると作成できません。その場合は既存の練習用リポジトリを使うか、`git-guidebook-practice-2`のように名前を変えます。実在する仕事用リポジトリは使わないでください。
+
+<Quiz
+  question="READMEを追加してGitHub上にリポジトリを作った直後、端末内の状態はどうなりますか？"
+  options={[
+    "端末にも自動で作業フォルダができる",
+    "端末側はまだ変わらない",
+    "GitHub Desktopが自動でCommitする"
+  ]}
+  answer={1}
+  explanation="Web上で作成しただけなので、端末へ持ってくるには次のCloneが必要です。"
+/>
+
+## 対応するGitコマンド
+
+このレッスンではGitHubのWeb画面を使ったため、対応する基本Gitコマンドはありません。GitHub CLIには作成機能がありますが、MVPでは扱いません。
+
+## 次のレッスンへ
+
+次はGitHub上のリポジトリをCloneし、端末内に作業フォルダとローカルリポジトリを作ります。

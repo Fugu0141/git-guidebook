@@ -1,0 +1,108 @@
+---
+lesson: 6
+title: "PushでGitHubへ送る"
+description: "ローカルリポジトリで進んだCommit履歴を、GitHub上のリモートへ送ります。"
+goals:
+  - "CommitとPushの違いを説明できる"
+  - "Push後にGitHub上の履歴を確認できる"
+draft: false
+---
+
+import Callout from "../../components/Callout.astro";
+import OptionalDetails from "../../components/OptionalDetails.astro";
+import Quiz from "../../components/Quiz.astro";
+import ScreenshotPlaceholder from "../../components/ScreenshotPlaceholder.astro";
+import StateDiagram from "../../components/StateDiagram.astro";
+
+## なぜPushするのか
+
+Commitした履歴は、まだ自分の端末内にしかありません。GitHub上でも確認・共有できるように、ローカルのCommitをリモートリポジトリへ送ります。この操作がPushです。
+
+## 操作前の状態
+
+ローカルのmainはGitHub上のmainよりCommitが1つ進んでいます。作業フォルダに未Commit変更はありません。
+
+<StateDiagram
+  title="Push前"
+  caption="ローカルだけに新しいCommitがある"
+  states={[
+    { label: "作業フォルダ", detail: "未Commit変更なし", status: "same" },
+    { label: "ローカル", detail: "Add practice note", status: "ahead" },
+    { label: "GitHub", detail: "1つ前のCommit", status: "same" }
+  ]}
+/>
+
+## 手順：Pushして確認する
+
+1. GitHub Desktop上部の **Push origin** を選びます。
+2. 処理が終わり、ボタンが **Fetch origin** に変わることを確認します。
+3. **Repository → View on GitHub** を選びます。
+4. GitHub上のREADMEに「練習メモ」があり、最新Commitが `Add practice note` になっていることを確認します。
+
+<ScreenshotPlaceholder
+  filename="lesson-06-step-02-push-origin-after.png"
+  title="Push後のGitHub上のREADME"
+  description="ローカルで作ったCommitがGitHub上のmainへ届いたことを確認するため"
+  requiredState={[
+    "リポジトリ: git-guidebook-practice",
+    "Add practice noteをmainへCommit済み",
+    "GitHub DesktopでPush originが完了済み",
+    "GitHubのリポジトリトップを表示"
+  ]}
+  capture="READMEの練習メモと最新Commitメッセージが確認できる状態で撮影する"
+  crop="リポジトリ名、Branchがmainである表示、最新Commit、READMEの追加部分"
+  exclude="ブラウザの他タブ、通知、メールアドレス、個人名、非公開リポジトリ"
+  altDraft="GitHub上のgit-guidebook-practiceリポジトリ。mainの最新CommitがAdd practice noteで、READMEに練習メモが表示されている"
+  priority="required"
+  variant="after"
+/>
+
+## 操作後の状態
+
+ローカルとGitHub上のmainが同じCommitを指しています。Pushは作業フォルダを編集する操作ではないため、端末内のファイル内容は変わりません。
+
+<StateDiagram
+  title="Push後"
+  caption="ローカルの履歴がリモートへ届いた"
+  states={[
+    { label: "作業フォルダ", detail: "変更なし", status: "same" },
+    { label: "ローカル", detail: "Add practice note", status: "same" },
+    { label: "GitHub", detail: "Add practice note", status: "changed" }
+  ]}
+/>
+
+<Callout type="point" title="CommitとPushの違い">
+  Commitは選んだ変更をローカルの履歴へ記録します。PushはローカルにあるCommit履歴をリモートへ送ります。Pushは「いま開いているファイルだけ」を送る操作ではありません。
+</Callout>
+
+## 内部で起きたこと
+
+Gitは `origin` と呼ばれるリモートへ、ローカルのmainにある新しいCommitを送信しました。GitHub側のmainが同じCommitまで進みました。
+
+<OptionalDetails summary="Fetch originと表示される理由">
+  Push後は送るCommitがありません。GitHub
+  Desktopは、リモートに新しい履歴がないか確認するFetchを次の候補として表示します。Fetchは情報を取得しますが、作業フォルダへ内容を反映するPullとは異なります。
+</OptionalDetails>
+
+## よくある失敗
+
+ネットワークやサインインの問題でPushが完了しないことがあります。何度もボタンを押す前に、表示されたメッセージ、接続、GitHubアカウントを確認してください。エラーに秘密情報が含まれる場合は公開場所へ貼らないでください。
+
+<Quiz
+  question="GitHub上にCommitを反映したいとき、Commitの次に必要な操作はどれですか？"
+  options={["Pull", "Push", "Clone"]}
+  answer={1}
+  explanation="PushがローカルのCommit履歴をGitHub上のリモートへ送ります。"
+/>
+
+## 対応するGitコマンド
+
+作業フォルダで、ローカルmainに未送信Commitがある状態で実行します。成功するとリモートのmainが進みます。
+
+```bash
+git push origin main
+```
+
+## 次のレッスンへ
+
+次はmainを直接進めず、新しいBranchへ履歴を分けて安全に変更します。

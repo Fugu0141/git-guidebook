@@ -1,100 +1,97 @@
-# 流れでわかる Git Guidebook
+# Git Guidebook
 
-GitHub Desktopから始めて、操作の**流れ**とGitの**内部の仕組み**を理解する初心者向け学習サイトです。
+GitHub Desktopを使い、リポジトリ作成からClone、編集、Commit、Push、Branch、Pull Request、Merge、Pullまでを実際の仕事の流れで学ぶ、日本語の初心者向けサイトです。
 
-> コマンドを暗記する前に、まず「いま何が、どこへ動いたのか」を理解する。
+Commitを「GitHubへのアップロード」と説明せず、毎回次の3つを区別します。
 
-## このプロジェクトについて
+- 作業フォルダ: 実際のファイルを編集する場所
+- ローカルリポジトリ: 端末内でGitの履歴を記録する場所
+- リモートリポジトリ: GitHub上で履歴を保管・共有する場所
 
-Gitの初心者向け教材には、用語やコマンドを知っている前提で説明が進み、操作同士のつながりが見えにくいものがあります。
+## MVPの内容
 
-このプロジェクトでは、ひとつの小さなプロジェクトを実際に進めながら、必要になった操作を順番に学びます。最初はGitHub Desktopを使って状態や差分を視覚的に確認し、理解したあとで対応するGitコマンドへ進みます。
+- Lesson 0〜11の実践カリキュラム
+- 操作前後を比較する状態図
+- Tip、Warning、OptionalDetailsなどの再利用可能な教材部品
+- 回答後にフィードバックが出る確認問題
+- ブラウザ内だけに保存する学習完了チェック
+- 前後ナビゲーション、パンくず、コース内の現在位置
+- スクリーンショット未提供箇所の正式な代替ブロック
+- レスポンシブ表示、キーボード操作、見えるフォーカス、reduced motion、印刷CSS
+- GitHub Pagesの `/git-guidebook/` base path
+- GitHub Actionsによる検証とPagesデプロイ
+- Lesson順序、必須構成、画像依頼同期、内部リンクの自動検証
 
-元になった記事：
-[【GitHub初心者向け】初めてでも絶対できる「GitHubを使ったバージョン管理」](https://qiita.com/Fugu0141/items/9c0d7f506a17737398a7)
+## ローカル開発
 
-## MVPのゴール
+Node.js 22以上とnpmを使用します。
 
-Git未経験者が、GitHub Desktopを使って次の一連の流れを自力で完了できることを目指します。
+```bash
+npm ci
+npm run dev
+```
 
-1. Git・GitHub・GitHub Desktopの役割を区別する
-2. リポジトリを作成してクローンする
-3. ファイルの変更と差分を確認する
-4. Commitして履歴を残す
-5. PushしてGitHubへ反映する
-6. Branchを作って安全に変更する
-7. Pull Requestを作成する
-8. Mergeしてmainへ統合する
-9. Pullしてローカルを最新状態にする
+表示されたローカルURLをブラウザで開きます。Astroには `/git-guidebook/` のbase pathが設定されているため、ローカルでも公開時と同じパス構成で確認できます。
 
-詳しい完了条件は [`docs/MVP.md`](docs/MVP.md) を参照してください。
+### 検証コマンド
 
-## 学習設計
+```bash
+npm run format:check
+npm run lint
+npm run typecheck
+npm test
+npm run build
+npm run check:links
+npm audit
+```
 
-各レッスンは、原則として次の型で構成します。
+自動整形する場合は `npm run format` を使用します。
 
-1. 今回やること
-2. 操作前の状態
-3. 実際の操作
-4. 画面上で起きた変化
-5. Git内部で起きたこと
-6. 操作後の状態
-7. よくある失敗
-8. 確認問題・演習
-9. 対応するGitコマンド
+## ディレクトリ構成
 
-カリキュラム案は [`docs/CURRICULUM.md`](docs/CURRICULUM.md) にあります。
+```text
+src/
+├── components/       # 教材用の再利用コンポーネント
+├── content/lessons/  # Lesson 0〜11のMDX
+├── layouts/          # 共通・教材レイアウト
+├── pages/            # ホーム、一覧、教材ルート、404
+└── styles/           # デザイン、レスポンシブ、印刷CSS
+tests/                # 教材・設定・画像依頼の自動テスト
+scripts/              # 本番成果物の内部リンク検査
+docs/                 # 要件、執筆基準、撮影依頼、完了報告
+```
 
-## 想定する技術構成
+## 教材を編集する
 
-- Astro
-- TypeScript
-- Markdown / MDX
-- GitHub Pages
-- GitHub Actionsによる自動デプロイ
+教材は `src/content/lessons/` のMDXです。frontmatterにはLesson番号、タイトル、説明、学習目標、公開状態が必要です。本文は [`docs/CONTENT_GUIDE.md`](docs/CONTENT_GUIDE.md) の標準構成に従います。
 
-教材本文をMarkdown中心で管理しながら、状態図や操作シミュレーターなどのインタラクティブ要素を段階的に追加できる構成を想定しています。
+画面画像が必要な位置には、架空のスクリーンショットを入れず `ScreenshotPlaceholder` を配置します。全必須項目を記入し、同じファイル名を [`docs/SCREENSHOT_REQUESTS.md`](docs/SCREENSHOT_REQUESTS.md) に登録してください。詳しいルールは [`docs/SCREENSHOT_PLACEHOLDER_SPEC.md`](docs/SCREENSHOT_PLACEHOLDER_SPEC.md) にあります。
 
-技術選定はMVP実装前に再確認します。
+## GitHub Pagesへ公開する
 
-## スクリーンショット
+1. この変更を `main` へMergeします。
+2. GitHubの **Settings → Pages** でSourceを **GitHub Actions** にします。
+3. Actionsで **Deploy Git Guidebook to Pages** workflowが成功することを確認します。
+4. 公開URL `https://fugu0141.github.io/git-guidebook/` でトップ、Lessonの直接URL、再読み込み、404を確認します。
+5. RepositoryのActions/Pages権限で失敗した場合は、所有者がPagesとworkflowの権限を確認します。
 
-教材画像は、未加工データとサイト公開用データを分けて管理します。
+workflowはmainへのPush時と手動実行に対応し、format、lint、型検査、テスト、build、内部リンク検査を実行してからPagesへデプロイします。
 
-- [`assets/screenshots/raw/`](assets/screenshots/raw/) — 個人情報を除いた未加工スクリーンショット
-- [`public/images/screenshots/`](public/images/screenshots/) — 加工・確認済みのサイト掲載画像
-- [`docs/SCREENSHOT_GUIDE.md`](docs/SCREENSHOT_GUIDE.md) — 撮影、命名、個人情報確認、代替テキストの基準
+## 公開前の人間による確認
 
-公開リポジトリのため、未加工データにも個人情報・認証情報・非公開プロジェクトの情報を含めません。ぼかして隠すより、教材専用の架空データを使って安全な状態を作り、撮り直す方を優先します。
+自動検証だけではMVPの学習成立を確認できません。[`docs/MANUAL_QA.md`](docs/MANUAL_QA.md) に従い、初心者2人以上の利用テスト、キーボード・モバイル表示、公開URLでのLighthouse相当確認を行ってください。
 
-## ドキュメント
+未撮影画像、GitHub Pagesの所有者操作、利用者テストなどは [`docs/CODEX_BLOCKERS.md`](docs/CODEX_BLOCKERS.md) にまとめています。実装と検証の結果は [`docs/CODEX_COMPLETION_REPORT.md`](docs/CODEX_COMPLETION_REPORT.md) を参照してください。
 
-- [`docs/MVP.md`](docs/MVP.md) — MVPの範囲と完了条件
-- [`docs/CURRICULUM.md`](docs/CURRICULUM.md) — 学習カリキュラム
-- [`ROADMAP.md`](ROADMAP.md) — 開発ロードマップ
-- [`CONTRIBUTING.md`](CONTRIBUTING.md) — 開発・執筆への参加方法
-- [`docs/CONTENT_GUIDE.md`](docs/CONTENT_GUIDE.md) — 教材を書くときの基準
-- [`docs/SCREENSHOT_GUIDE.md`](docs/SCREENSHOT_GUIDE.md) — 教材画像の撮影・管理基準
+## 主要ドキュメント
 
-## 開発状況
-
-現在は **Phase 0: 企画・設計** です。
-
-- [x] リポジトリ作成
-- [x] プロジェクトの目的を定義
-- [x] MVPの範囲を定義
-- [x] スクリーンショット運用を定義
-- [ ] Astroプロジェクトの初期化
-- [ ] GitHub Pagesへの自動デプロイ
-- [ ] トップページの実装
-- [ ] MVPレッスンの移植・再構成
-
-## コントリビューション
-
-誤字修正、説明の改善、図解、アクセシビリティ、UI、教材レビューなど、さまざまな形で参加できます。
-
-大きな変更を始める前にIssueで目的と方針を共有してください。詳しくは [`CONTRIBUTING.md`](CONTRIBUTING.md) を参照してください。
+- [`docs/MVP.md`](docs/MVP.md): MVPの範囲と完了条件
+- [`docs/CURRICULUM.md`](docs/CURRICULUM.md): Lesson 0〜11の学習順序
+- [`docs/CODEX_EXECUTION_PLAN.md`](docs/CODEX_EXECUTION_PLAN.md): 実装の進行状況
+- [`docs/CONTENT_GUIDE.md`](docs/CONTENT_GUIDE.md): 教材執筆の基準
+- [`docs/SCREENSHOT_GUIDE.md`](docs/SCREENSHOT_GUIDE.md): 安全な撮影ルール
+- [`CONTRIBUTING.md`](CONTRIBUTING.md): 開発・教材改善への参加方法
 
 ## ライセンス
 
-コードと教材本文では適したライセンスが異なるため、正式なライセンスは初期設計中に決定します。ライセンス決定までは、無断での再配布・再利用は避けてください。
+コードと教材本文の正式なライセンスは所有者の決定待ちです。決定までは、大規模な再配布・再利用を避けてください。

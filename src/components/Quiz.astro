@@ -1,0 +1,60 @@
+---
+interface Props {
+  question: string;
+  options: string[];
+  answer: number;
+  explanation: string;
+}
+
+const { question, options, answer, explanation } = Astro.props;
+const quizId = `quiz-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+<section
+  class="quiz"
+  data-quiz
+  data-answer={answer}
+  data-explanation={explanation}
+  aria-labelledby={`${quizId}-title`}
+>
+  <p class="quiz-label">確認問題</p>
+  <h2 id={`${quizId}-title`}>{question}</h2>
+  <fieldset>
+    <legend class="visually-hidden">{question}</legend>
+    {
+      options.map((option, index) => (
+        <label>
+          <input type="radio" name={quizId} value={index} />
+          <span>{option}</span>
+        </label>
+      ))
+    }
+  </fieldset>
+  <button type="button" data-quiz-submit>答えを確認</button>
+  <p class="quiz-feedback" data-quiz-feedback aria-live="polite"></p>
+</section>
+
+<script>
+  const initializeQuizzes = () => {
+    document.querySelectorAll<HTMLElement>("[data-quiz]").forEach((quiz) => {
+      if (quiz.dataset.ready === "true") return;
+      quiz.dataset.ready = "true";
+      const button = quiz.querySelector<HTMLButtonElement>("[data-quiz-submit]");
+      const feedback = quiz.querySelector<HTMLElement>("[data-quiz-feedback]");
+      button?.addEventListener("click", () => {
+        const selected = quiz.querySelector<HTMLInputElement>("input:checked");
+        if (!feedback) return;
+        if (!selected) {
+          feedback.textContent = "選択肢を1つ選んでください。";
+          feedback.dataset.result = "waiting";
+          return;
+        }
+        const isCorrect = selected.value === quiz.dataset.answer;
+        feedback.textContent = `${isCorrect ? "正解です。 " : "もう一度考えてみましょう。 "}${quiz.dataset.explanation ?? ""}`;
+        feedback.dataset.result = isCorrect ? "correct" : "incorrect";
+      });
+    });
+  };
+  initializeQuizzes();
+  document.addEventListener("astro:page-load", initializeQuizzes);
+</script>

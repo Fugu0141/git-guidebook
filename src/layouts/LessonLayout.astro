@@ -1,0 +1,72 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import LessonNavigation from "../components/LessonNavigation.astro";
+import ProgressToggle from "../components/ProgressToggle.astro";
+import { withBase } from "../utils/paths";
+
+interface LessonSummary {
+  lesson: number;
+  title: string;
+  slug: string;
+}
+
+interface Props {
+  lesson: number;
+  title: string;
+  description: string;
+  goals: string[];
+  previous?: LessonSummary;
+  next?: LessonSummary;
+}
+
+const { lesson, title, description, goals, previous, next } = Astro.props;
+---
+
+<BaseLayout title={`Lesson ${lesson}: ${title} | Git Guidebook`} description={description}>
+  <div class="lesson-shell shell">
+    <aside class="lesson-sidebar" aria-label="レッスン情報">
+      <a class="back-link" href={withBase("lessons/")}>← レッスン一覧</a>
+      <p class="eyebrow">Lesson {lesson} / 11</p>
+      <div
+        class="progress-meter"
+        role="progressbar"
+        aria-label="コース内の現在位置"
+        aria-valuemin="0"
+        aria-valuemax="11"
+        aria-valuenow={lesson}
+      >
+        <span style={`--progress: ${(lesson / 11) * 100}%`}></span>
+      </div>
+      <p class="progress-copy">{lesson === 11 ? "最終課題" : `${lesson + 1}つ目のレッスン`}</p>
+    </aside>
+
+    <article class="lesson-content">
+      <nav class="breadcrumbs" aria-label="パンくず">
+        <ol>
+          <li><a href={withBase()}>ホーム</a></li>
+          <li><a href={withBase("lessons/")}>レッスン</a></li>
+          <li aria-current="page">Lesson {lesson}</li>
+        </ol>
+      </nav>
+
+      <header class="lesson-hero">
+        <p class="eyebrow">Lesson {lesson}</p>
+        <h1>{title}</h1>
+        <p class="lead">{description}</p>
+        <section class="goal-card" aria-labelledby="goals-heading">
+          <h2 id="goals-heading">今回できるようになること</h2>
+          <ul>
+            {goals.map((goal) => <li>{goal}</li>)}
+          </ul>
+        </section>
+      </header>
+
+      <div class="prose">
+        <slot />
+      </div>
+
+      <ProgressToggle lesson={lesson} />
+      <LessonNavigation {previous} {next} />
+    </article>
+  </div>
+</BaseLayout>

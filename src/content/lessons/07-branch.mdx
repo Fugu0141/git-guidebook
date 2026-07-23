@@ -1,0 +1,116 @@
+---
+lesson: 7
+title: "Branchで安全に作業する"
+description: "mainを保ったまま、新しい履歴の流れで変更を進めます。"
+goals:
+  - "mainと作業Branchの役割を説明できる"
+  - "Branchを作成しGitHubへPublishできる"
+draft: false
+---
+
+import Callout from "../../components/Callout.astro";
+import OptionalDetails from "../../components/OptionalDetails.astro";
+import Quiz from "../../components/Quiz.astro";
+import ScreenshotPlaceholder from "../../components/ScreenshotPlaceholder.astro";
+import StateDiagram from "../../components/StateDiagram.astro";
+
+## なぜBranchを作るのか
+
+mainは、プロジェクトの基準となる履歴です。新しい変更を別のBranchで進めると、完成・確認するまでmainを動かさずに済みます。Branchはファイルを入れる別フォルダではなく、履歴の進む先を分ける仕組みです。
+
+## 操作前の状態
+
+ローカルとGitHubのmainは同じCommitを指し、未Commit変更はありません。
+
+<StateDiagram
+  title="Branch作成前"
+  caption="履歴の進む先はmainだけ"
+  states={[
+    { label: "作業フォルダ", detail: "mainの内容", status: "same" },
+    { label: "ローカル main", detail: "最新Commit", status: "same" },
+    { label: "GitHub main", detail: "同じ最新Commit", status: "same" }
+  ]}
+/>
+
+## 手順：Branchを作成してPublishする
+
+1. GitHub Desktop上部の **Current Branch** を開きます。
+2. **New Branch** を選びます。
+3. 名前に `add-learning-goal` と入力します。
+4. **Create Branch** を選びます。
+5. 上部表示が `Current Branch: add-learning-goal` になったことを確認します。
+6. **Publish branch** を選び、GitHub上にも同名Branchを作ります。
+
+<ScreenshotPlaceholder
+  filename="lesson-07-step-02-create-branch.png"
+  title="新しいBranchの作成ダイアログ"
+  description="現在のmainからadd-learning-goalという作業Branchを作る操作を確認するため"
+  requiredState={[
+    "リポジトリ: git-guidebook-practice",
+    "現在のBranch: main",
+    "未Commitの変更なし",
+    "mainはGitHubへPush済み",
+    "New Branchダイアログを表示"
+  ]}
+  capture="Nameにadd-learning-goalと入力し、Create Branchを押す直前で撮影する"
+  crop="Current Branch周辺とNew Branchダイアログ全体"
+  exclude="メールアドレス、他のリポジトリ名、OSユーザー名、個人情報"
+  altDraft="GitHub DesktopのNew Branchダイアログ。add-learning-goalという名前を入力し、mainからBranchを作成する直前の状態"
+  priority="required"
+  variant="dialog"
+/>
+
+<Callout type="warning" title="現在のBranchを毎回確認">
+  ファイルを編集する前に、GitHub Desktop上部のCurrent
+  Branchを見ます。意図しないBranchで作業しても慌てず、まず未Commit変更があるか確認してください。
+</Callout>
+
+## 操作後の状態
+
+ローカルとGitHubに `add-learning-goal` Branchがあります。作った直後はmainと同じCommitを指しているため、ファイル内容も同じです。
+
+<StateDiagram
+  title="BranchをPublishした後"
+  caption="同じCommitから2つの履歴名が始まる"
+  states={[
+    { label: "main", detail: "基準の履歴を保つ", status: "same" },
+    { label: "ローカルBranch", detail: "現在地。次のCommit先", status: "changed" },
+    { label: "GitHub Branch", detail: "Publish済み", status: "changed" }
+  ]}
+/>
+
+## 内部で起きたこと
+
+ローカルに新しいBranch名が作られ、現在地がそのBranchへ切り替わりました。Publish branchで同じBranch名がリモートにも作られ、今後Pushする対応先が設定されました。
+
+<OptionalDetails summary="Branchは軽い目印">
+  Branchは履歴全体のコピーではなく、Commitを指す移動可能な名前として扱えます。新しいCommitを作ると、現在のBranchだけがそのCommitへ進みます。
+</OptionalDetails>
+
+## よくある失敗
+
+Branchを作っただけで安心し、Current Branchを確認せずmainを編集することがあります。編集前・Commit前の2回、現在のBranch名を読みます。
+
+<Quiz
+  question="新しいBranchを作った直後、mainとのファイル内容はどうなっていますか？"
+  options={[
+    "最初から別の内容になる",
+    "同じCommitを指すので内容は同じ",
+    "mainのファイルが削除される"
+  ]}
+  answer={1}
+  explanation="Branch作成直後は同じ地点です。その後のCommitで履歴が分かれます。"
+/>
+
+## 対応するGitコマンド
+
+作業フォルダで未Commit変更がないことを確認して実行します。最初のコマンドで作成と切り替え、次でリモートへPublishします。
+
+```bash
+git switch -c add-learning-goal
+git push -u origin add-learning-goal
+```
+
+## 次のレッスンへ
+
+次はこのBranchで変更をCommit・Pushし、mainへ取り込む提案としてPull Requestを作ります。

@@ -1,0 +1,22 @@
+---
+interface Props {
+  type?: "tip" | "warning" | "point";
+  title?: string;
+}
+
+const { type = "tip", title } = Astro.props;
+const labels = {
+  tip: { icon: "💡", fallback: "ヒント" },
+  warning: { icon: "⚠", fallback: "注意" },
+  point: { icon: "✓", fallback: "ポイント" }
+};
+const label = labels[type];
+---
+
+<aside class:list={["callout", `callout-${type}`]} aria-label={title ?? label.fallback}>
+  <p class="callout-title">
+    <span aria-hidden="true">{label.icon}</span>
+    {title ?? label.fallback}
+  </p>
+  <div class="callout-body"><slot /></div>
+</aside>

@@ -1,0 +1,113 @@
+---
+lesson: 4
+title: "変更と差分を見る"
+description: "作業フォルダを編集し、Gitが認識した変更をGitHub Desktopで確認します。"
+goals:
+  - "作業フォルダの変更と履歴の違いを説明できる"
+  - "追加・削除された行とCommit対象を確認できる"
+draft: false
+---
+
+import Callout from "../../components/Callout.astro";
+import OptionalDetails from "../../components/OptionalDetails.astro";
+import Quiz from "../../components/Quiz.astro";
+import ScreenshotPlaceholder from "../../components/ScreenshotPlaceholder.astro";
+import StateDiagram from "../../components/StateDiagram.astro";
+
+## なぜ差分を見るのか
+
+Commitする前に、記録したい変更だけが含まれているかを確かめます。差分を読む習慣があると、秘密情報や関係ない編集を誤って履歴へ入れるリスクを減らせます。
+
+## 操作前の状態
+
+Clone直後なので、作業フォルダ、ローカルリポジトリ、GitHub上の内容は同じです。GitHub Desktopの **Changes** には変更がありません。
+
+<StateDiagram
+  title="編集前"
+  caption="3か所の内容がそろっている"
+  states={[
+    { label: "作業フォルダ", detail: "READMEはClone時の内容", status: "same" },
+    { label: "ローカル", detail: "READMEの履歴", status: "same" },
+    { label: "GitHub", detail: "READMEの履歴", status: "same" }
+  ]}
+/>
+
+## 手順：READMEを編集する
+
+1. 作業フォルダの `README.md` をテキストエディターで開きます。
+2. 末尾に次の2行を追加し、ファイルを保存します。
+
+```markdown
+## 練習メモ
+
+Gitの3つの場所を区別して学びます。
+```
+
+3. GitHub Desktopへ戻り、左側の **Changes** で `README.md` を選びます。
+4. 右側の差分で、追加した行だけが表示されているか確認します。
+5. ファイル名の左にあるチェックがオンであることを確認します。このチェックは次のCommitに含める変更を選びます。
+
+<ScreenshotPlaceholder
+  filename="lesson-04-step-02-review-diff.png"
+  title="README.mdの変更差分"
+  description="GitHub Desktopで追加行とCommit対象のチェックを確認するため"
+  requiredState={[
+    "リポジトリ: git-guidebook-practice",
+    "現在のBranch: main",
+    "README.mdに指定の見出しと1文を追加して保存済み",
+    "まだCommitしていない"
+  ]}
+  capture="ChangesでREADME.mdを選び、追加行の差分を表示して撮影する"
+  crop="Changes一覧、README.mdのチェック、追加行を示す差分が読める範囲"
+  exclude="メールアドレス、他のリポジトリ名、OSユーザー名、個人情報、秘密情報"
+  altDraft="GitHub DesktopのChanges画面。README.mdが選択され、追加した練習メモの行が差分として表示されている"
+  priority="required"
+  variant="overview"
+/>
+
+## 操作後の状態
+
+変わったのは作業フォルダだけです。ローカルリポジトリの最後のCommitとGitHub上の履歴はまだ変わっていません。
+
+<StateDiagram
+  title="編集後・Commit前"
+  caption="未Commit変更は作業フォルダにだけある"
+  states={[
+    { label: "作業フォルダ", detail: "READMEに新しい行がある", status: "changed" },
+    { label: "ローカル", detail: "前の履歴のまま", status: "same" },
+    { label: "GitHub", detail: "前の履歴のまま", status: "same" }
+  ]}
+/>
+
+## 内部で起きたこと
+
+Gitは作業フォルダの現在内容と、ローカルリポジトリに記録済みの内容を比べ、差分を検出しました。まだ新しいCommitは作られていません。
+
+<OptionalDetails summary="チェックを外すとどうなる？">
+  GitHub
+  Desktopでファイルのチェックを外すと、その変更は次のCommitに含まれません。作業フォルダのファイルが元に戻るわけではなく、未Commit変更として残ります。
+</OptionalDetails>
+
+## よくある失敗
+
+エディターで保存していないため、GitHub Desktopに差分が出ないことがあります。まずファイルを保存し、GitHub Desktopで正しいリポジトリを開いているか確認します。
+
+<Quiz
+  question="README.mdを保存した直後で、まだCommitしていません。変わった場所はどこですか？"
+  options={["作業フォルダだけ", "ローカルリポジトリだけ", "GitHub上だけ"]}
+  answer={0}
+  explanation="ファイル保存は作業フォルダの変更です。履歴へ記録するにはCommitが必要です。"
+/>
+
+## 対応するGitコマンド
+
+作業フォルダの中で実行します。`git status` は変更されたファイルを、`git diff` は未Commitの行差分を表示します。どちらも状態を変更しません。
+
+```bash
+git status
+git diff
+```
+
+## 次のレッスンへ
+
+次は確認した変更を、意味のあるメッセージと一緒にローカルリポジトリへCommitします。
