@@ -57,6 +57,16 @@ Git未経験者が、GitHub Desktopを使って次の一連の流れを自力で
 
 技術選定はMVP実装前に再確認します。
 
+## スクリーンショット
+
+教材画像は、未加工データとサイト公開用データを分けて管理します。
+
+- [`assets/screenshots/raw/`](assets/screenshots/raw/) — 個人情報を除いた未加工スクリーンショット
+- [`public/images/screenshots/`](public/images/screenshots/) — 加工・確認済みのサイト掲載画像
+- [`docs/SCREENSHOT_GUIDE.md`](docs/SCREENSHOT_GUIDE.md) — 撮影、命名、個人情報確認、代替テキストの基準
+
+公開リポジトリのため、未加工データにも個人情報・認証情報・非公開プロジェクトの情報を含めません。ぼかして隠すより、教材専用の架空データを使って安全な状態を作り、撮り直す方を優先します。
+
 ## ドキュメント
 
 - [`docs/MVP.md`](docs/MVP.md) — MVPの範囲と完了条件
@@ -64,6 +74,7 @@ Git未経験者が、GitHub Desktopを使って次の一連の流れを自力で
 - [`ROADMAP.md`](ROADMAP.md) — 開発ロードマップ
 - [`CONTRIBUTING.md`](CONTRIBUTING.md) — 開発・執筆への参加方法
 - [`docs/CONTENT_GUIDE.md`](docs/CONTENT_GUIDE.md) — 教材を書くときの基準
+- [`docs/SCREENSHOT_GUIDE.md`](docs/SCREENSHOT_GUIDE.md) — 教材画像の撮影・管理基準
 
 ## 開発状況
 
@@ -72,6 +83,7 @@ Git未経験者が、GitHub Desktopを使って次の一連の流れを自力で
 - [x] リポジトリ作成
 - [x] プロジェクトの目的を定義
 - [x] MVPの範囲を定義
+- [x] スクリーンショット運用を定義
 - [ ] Astroプロジェクトの初期化
 - [ ] GitHub Pagesへの自動デプロイ
 - [ ] トップページの実装
