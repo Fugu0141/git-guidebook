@@ -12,7 +12,8 @@
 - GitHub Desktopを中心に一連のGit操作を学べる
 - ローカル・リモート・作業フォルダの違いが継続して示される
 - 重要操作には確認問題または演習がある
-- スクリーンショット未提供箇所は、安全なプレースホルダーと依頼一覧で管理される
+- スクリーンショット未提供箇所には、必要情報を示す色付きの代替ブロックが正確な掲載位置にある
+- 代替ブロックと `docs/SCREENSHOT_REQUESTS.md` が画像名で同期している
 - モバイルとデスクトップで主要ページが利用できる
 - アクセシビリティの基本要件を満たす
 - lint、型検査、テスト、本番ビルドが成功する
@@ -22,6 +23,8 @@
 Codexは、上から順に未完了の項目を実装します。各まとまりの後に検証し、失敗した場合は原因を修正してから次へ進みます。
 
 大きな設計判断を独断で変えず、既存文書を優先してください。判断不能な内容は `docs/CODEX_BLOCKERS.md` に記録します。
+
+スクリーンショットが未提供でも停止しません。`docs/SCREENSHOT_PLACEHOLDER_SPEC.md` に従って、最終掲載位置へ代替ブロックを置き、依頼一覧へ同じ画像名で登録します。
 
 ## Milestone 1: プロジェクト基盤
 
@@ -62,6 +65,9 @@ Codexは、上から順に未完了の項目を実装します。各まとまり
   - [ ] ScreenshotPlaceholder
   - [ ] OptionalDetails
   - [ ] LessonNavigation
+- [ ] `ScreenshotPlaceholder`を `docs/SCREENSHOT_PLACEHOLDER_SPEC.md` に従って実装する
+- [ ] 画像名、用途、必要状態、撮影操作、切り抜き範囲、除外情報、仮altを表示できるようにする
+- [ ] 色だけに依存せず、ラベル・枠線・アイコンでも代替ブロックだと分かるようにする
 - [ ] とらふぐちゃんを後から追加できる構造にするが、画像自体は必須にしない
 - [ ] reduced motionとkeyboard focusに対応する
 
@@ -70,6 +76,7 @@ Codexは、上から順に未完了の項目を実装します。各まとまり
 - 主要コンポーネントがサンプルページで確認できる
 - 320px程度の画面幅でも横スクロールせず読める
 - キャラクター画像なしでもデザインが成立する
+- 代替ブロックがモバイルでも読めて、開発者向けTODOではなく閲覧者にも意味が伝わる
 
 ## Milestone 3: コンテンツモデルとルーティング
 
@@ -113,7 +120,10 @@ Codexは、上から順に未完了の項目を実装します。各まとまり
 - よくある失敗が少なくとも1つある
 - 確認問題または演習がある
 - 対応するCLIコマンドが補足される
-- 必要なスクリーンショットが未提供なら依頼一覧に追加される
+- スクリーンショットを入れたい正確な位置に代替ブロックがある
+- 各代替ブロックに予定画像名と撮影要件がある
+- 各代替ブロックが `docs/SCREENSHOT_REQUESTS.md` に登録されている
+- 画像がなくても本文だけで操作を追える
 
 ## Milestone 5: 学習体験
 
@@ -132,6 +142,8 @@ Codexは、上から順に未完了の項目を実装します。各まとまり
 - [ ] Lessonのfrontmatterと順序を検証する
 - [ ] 内部リンクを検証する
 - [ ] 画像のalt属性を検証する
+- [ ] 代替ブロックの必須項目を検証する
+- [ ] 代替ブロックとスクリーンショット依頼一覧の画像名が一致することを検証する
 - [ ] 主要ページのHTML構造を検証する
 - [ ] npm audit結果を確認し、重大な問題を解消する
 - [ ] Lighthouseまたは同等の確認項目を文書化する
@@ -143,6 +155,7 @@ Codexは、上から順に未完了の項目を実装します。各まとまり
 - [ ] ローカル開発手順を確定する
 - [ ] GitHub Pages設定手順を文書化する
 - [ ] スクリーンショット依頼一覧を整理する
+- [ ] 残っている代替ブロックを必須・任意に分類する
 - [ ] 残課題をIssue候補としてまとめる
 - [ ] `docs/CODEX_COMPLETION_REPORT.md`を作成する
 
@@ -152,6 +165,7 @@ Codexは、上から順に未完了の項目を実装します。各まとまり
 - 完成条件に対する結果
 - 実行した検証と結果
 - 未提供画像・人間による確認が必要な箇所
+- 代替ブロックの総数と必須・任意の内訳
 - 技術的負債とMVP後の推奨事項
 - GitHub Pages公開に必要な手動操作
 
@@ -159,4 +173,4 @@ Codexは、上から順に未完了の項目を実装します。各まとまり
 
 Codexへは次の内容を依頼します。
 
-> Read `AGENTS.md` and `docs/CODEX_EXECUTION_PLAN.md`, then autonomously implement the Git Guidebook MVP. Work milestone by milestone, run all checks after each coherent slice, fix failures, update the plan checkboxes, and continue until the definition of done is met or a documented stop condition applies. Do not wait for routine confirmation. Use placeholders and `docs/SCREENSHOT_REQUESTS.md` for missing screenshots. End by writing `docs/CODEX_COMPLETION_REPORT.md`.
+> Read `AGENTS.md`, `docs/CODEX_EXECUTION_PLAN.md`, and `docs/SCREENSHOT_PLACEHOLDER_SPEC.md`, then autonomously implement the Git Guidebook MVP. Work milestone by milestone, run all checks after each coherent slice, fix failures, update the plan checkboxes, and continue until the definition of done is met or a documented stop condition applies. Do not wait for routine confirmation. At every position where a screenshot would improve the lesson, insert a colored `ScreenshotPlaceholder` containing the planned filename and capture requirements, and register it in `docs/SCREENSHOT_REQUESTS.md`. End by writing `docs/CODEX_COMPLETION_REPORT.md`.
