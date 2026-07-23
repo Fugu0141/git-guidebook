@@ -1,0 +1,49 @@
+---
+import "../styles/global.css";
+import { withBase } from "../utils/paths";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#11332f" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href={withBase("favicon.svg")} type="image/svg+xml" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">本文へ移動</a>
+    <header class="site-header">
+      <div class="shell header-inner">
+        <a class="brand" href={withBase()} aria-label="Git Guidebook トップページ">
+          <span class="brand-mark" aria-hidden="true">G</span>
+          <span>Git Guidebook</span>
+        </a>
+        <nav aria-label="メインナビゲーション">
+          <a href={withBase()}>ホーム</a>
+          <a href={withBase("lessons/")}>レッスン</a>
+        </nav>
+      </div>
+    </header>
+    <main id="main-content">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="shell footer-inner">
+        <p>Gitの操作を「どこが変わるか」から学ぶ、初心者向けガイド。</p>
+        <a href={withBase("lessons/")}>Lesson 0から始める</a>
+      </div>
+    </footer>
+  </body>
+</html>

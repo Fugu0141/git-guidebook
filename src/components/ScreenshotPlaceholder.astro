@@ -1,0 +1,94 @@
+---
+interface Props {
+  filename: string;
+  title: string;
+  description: string;
+  requiredState: string[];
+  capture: string;
+  crop: string;
+  exclude: string;
+  altDraft: string;
+  priority: "required" | "optional";
+  variant?: string;
+  note?: string;
+}
+
+const {
+  filename,
+  title,
+  description,
+  requiredState,
+  capture,
+  crop,
+  exclude,
+  altDraft,
+  priority,
+  variant,
+  note
+} = Astro.props;
+---
+
+<aside
+  class="screenshot-placeholder"
+  data-screenshot-filename={filename}
+  aria-label={`スクリーンショット差し替え予定: ${title}`}
+>
+  <header>
+    <span class="camera-icon" aria-hidden="true">▣</span>
+    <div>
+      <p class="placeholder-kicker">スクリーンショット差し替え予定</p>
+      <h2>{title}</h2>
+    </div>
+    <span class="priority-label">{priority === "required" ? "必須" : "任意"}</span>
+  </header>
+  <dl>
+    <div>
+      <dt>最終ファイル名</dt>
+      <dd><code>{filename}</code></dd>
+    </div>
+    <div>
+      <dt>目的</dt>
+      <dd>{description}</dd>
+    </div>
+    <div>
+      <dt>必要な状態</dt>
+      <dd>
+        <ul>
+          {requiredState.map((state) => <li>{state}</li>)}
+        </ul>
+      </dd>
+    </div>
+    <div>
+      <dt>撮影する操作</dt>
+      <dd>{capture}</dd>
+    </div>
+    <div>
+      <dt>切り抜き範囲</dt>
+      <dd>{crop}</dd>
+    </div>
+    <div>
+      <dt>映してはいけない情報</dt>
+      <dd>{exclude}</dd>
+    </div>
+    <div>
+      <dt>代替テキスト案</dt>
+      <dd>{altDraft}</dd>
+    </div>
+    {
+      variant && (
+        <div>
+          <dt>種類</dt>
+          <dd>{variant}</dd>
+        </div>
+      )
+    }
+    {
+      note && (
+        <div>
+          <dt>撮影メモ</dt>
+          <dd>{note}</dd>
+        </div>
+      )
+    }
+  </dl>
+</aside>

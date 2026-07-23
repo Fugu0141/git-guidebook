@@ -1,0 +1,12 @@
+---
+interface Props {
+  summary?: string;
+}
+
+const { summary = "もう少し正確に" } = Astro.props;
+---
+
+<details class="optional-details">
+  <summary>{summary}</summary>
+  <div><slot /></div>
+</details>

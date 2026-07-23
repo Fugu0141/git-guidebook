@@ -1,0 +1,103 @@
+---
+lesson: 0
+title: "「完成版」が増殖する前に"
+description: "ファイルのコピーではなく、変更の履歴を残す理由を理解します。"
+goals:
+  - "バージョン管理が解決する問題を説明できる"
+  - "このコースで作るものと学習の流れが分かる"
+draft: false
+---
+
+import Callout from "../../components/Callout.astro";
+import OptionalDetails from "../../components/OptionalDetails.astro";
+import Quiz from "../../components/Quiz.astro";
+import StateDiagram from "../../components/StateDiagram.astro";
+
+## なぜ履歴が必要なのか
+
+文章や資料を直すたびに、`完成版.docx`、`完成版_修正.docx`、`完成版_本当の最終.docx`とコピーした経験はありませんか。コピーはその瞬間の内容を残せますが、「どれが最新か」「何を変えたか」「なぜ変えたか」が分かりにくくなります。
+
+Gitは、ファイルを増殖させる代わりに、ひとつの作業場所で変更のまとまりを履歴として記録します。必要なときは、過去の状態や変更内容を確認できます。
+
+<Callout type="point" title="Gitが記録するもの">
+  Gitは「完成したファイル」だけでなく、どのファイルのどこを変え、その変更をどんな意図で記録したかを扱います。
+</Callout>
+
+## 操作前の状態
+
+いまはファイルとコピーだけがあり、履歴を管理する仕組みはありません。
+
+<StateDiagram
+  title="コピーで管理している状態"
+  caption="名前だけでは最新状態や変更理由を判断しにくい"
+  states={[
+    { label: "作業フォルダ", detail: "似た名前のファイルが複数ある", status: "changed" },
+    { label: "ローカルリポジトリ", detail: "まだ存在しない", status: "same" },
+    { label: "GitHub", detail: "まだ存在しない", status: "same" }
+  ]}
+/>
+
+## このコースで作るもの
+
+これからGitHubに `git-guidebook-practice` という練習用リポジトリを作り、端末へCloneします。自己紹介ファイルを編集してCommit、Pushし、Branch上の変更をPull RequestでmainへMergeします。最後に、GitHub上で進んだmainをPullして端末へ取り込みます。
+
+手順は次の順です。
+
+1. GitHub上にリモートリポジトリを作る
+2. Cloneして、端末に作業フォルダとローカルリポジトリを作る
+3. ファイルを編集し、差分を確認する
+4. Commitでローカルの履歴へ記録する
+5. Pushでその履歴をGitHubへ送る
+6. Branchを作り、Pull RequestをMergeする
+7. PullでGitHubの最新履歴を端末へ取り込む
+
+## 操作後の状態
+
+このレッスンではまだGitを操作していません。ただし、これから区別し続ける3つの場所を確認できました。
+
+<StateDiagram
+  title="これから区別する3つの場所"
+  caption="同じプロジェクトでも、役割が異なる"
+  states={[
+    { label: "作業フォルダ", detail: "実際のファイルを編集する場所" },
+    { label: "ローカルリポジトリ", detail: "端末内で履歴を記録する場所" },
+    { label: "リモートリポジトリ", detail: "GitHub上で履歴を共有する場所" }
+  ]}
+/>
+
+## 内部で起きたこと
+
+まだ何も作成・変更していません。「どこが変わったか」を確かめる考え方を準備した段階です。
+
+<OptionalDetails>
+  Gitはスナップショットという考え方で各Commitの状態を記録します。初心者のうちは、Commitを「意味のある変更をひとまとまりにした履歴」と考えれば十分です。
+</OptionalDetails>
+
+## よくある失敗
+
+「Gitを使えば自動で全部保存される」と思い込むことです。作業中のファイル保存と、Gitで履歴を記録するCommitは別の操作です。
+
+<Quiz
+  question="Gitを使う一番の目的として適切なのはどれですか？"
+  options={[
+    "ファイル名に『最終』を自動追加する",
+    "変更のまとまりと理由を履歴として追えるようにする",
+    "すべてのファイルを自動でGitHubへ公開する"
+  ]}
+  answer={1}
+  explanation="Gitは変更履歴を管理します。GitHubへの公開や送信は別の判断と操作です。"
+/>
+
+## 対応するGitコマンド
+
+このレッスンでは履歴を変えるコマンドを実行しません。Gitを使える環境か確認したい場合だけ、任意のフォルダで次を実行できます。バージョンを表示するだけで、ファイルや履歴は変わりません。
+
+```bash
+git --version
+```
+
+次のレッスンで、Git・GitHub・GitHub Desktopの役割を分けて理解します。
+
+## 次のレッスンへ
+
+次は3つの道具と、作業フォルダ・ローカル・リモートの関係を整理します。

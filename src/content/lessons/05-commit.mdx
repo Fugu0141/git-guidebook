@@ -1,0 +1,114 @@
+---
+lesson: 5
+title: "Commitでローカルに記録する"
+description: "確認した変更を、ひとまとまりの履歴として端末内へ記録します。"
+goals:
+  - "意味のあるCommitメッセージを書ける"
+  - "CommitはGitHubへの送信ではないと説明できる"
+draft: false
+---
+
+import Callout from "../../components/Callout.astro";
+import OptionalDetails from "../../components/OptionalDetails.astro";
+import Quiz from "../../components/Quiz.astro";
+import ScreenshotPlaceholder from "../../components/ScreenshotPlaceholder.astro";
+import StateDiagram from "../../components/StateDiagram.astro";
+
+## なぜCommitするのか
+
+編集した内容を「練習メモを追加した変更」というひとまとまりの履歴にします。後から見た人が目的を理解できるよう、Commitメッセージには結果ではなく変更の内容を書きます。
+
+## 操作前の状態
+
+READMEの変更は作業フォルダにあります。ローカルリポジトリにもGitHubにも、新しい履歴はまだありません。
+
+<StateDiagram
+  title="Commit前"
+  caption="未Commit変更が作業フォルダにある"
+  states={[
+    { label: "作業フォルダ", detail: "READMEが変更済み", status: "changed" },
+    { label: "ローカル", detail: "変更前の履歴", status: "same" },
+    { label: "GitHub", detail: "変更前の履歴", status: "same" }
+  ]}
+/>
+
+## 手順：変更をCommitする
+
+1. GitHub Desktopの **Changes** で `README.md` の差分をもう一度確認します。
+2. 左下の **Summary (required)** に `Add practice note` と入力します。
+3. **Description** は今回は空でも構いません。理由や補足が必要なときに使います。
+4. ボタンが **Commit to main** になっていることを確認します。
+5. **Commit to main** を選びます。
+6. Changesが空になり、上部に **Push origin** が表示されることを確認します。
+
+<ScreenshotPlaceholder
+  filename="lesson-05-step-03-create-commit.png"
+  title="Commit直前のChanges画面"
+  description="差分、選択対象、Summary、Commit先のBranchを一緒に確認するため"
+  requiredState={[
+    "リポジトリ: git-guidebook-practice",
+    "現在のBranch: main",
+    "README.mdに練習メモの未Commit変更がある",
+    "SummaryにAdd practice noteと入力済み"
+  ]}
+  capture="Commit to mainを押す直前で撮影する"
+  crop="Changes一覧、README.mdの差分、Summary入力欄、Commit to mainボタン"
+  exclude="メールアドレス、他のリポジトリ名、OSユーザー名、個人情報"
+  altDraft="GitHub DesktopのChanges画面。README.mdの差分とAdd practice noteというSummaryが表示され、Commit to mainを押す直前の状態"
+  priority="required"
+  variant="before"
+/>
+
+<Callout type="point" title="Commitはアップロードではありません">
+  Commitで変わるのは端末内のローカルリポジトリです。この時点ではGitHub上のREADMEと履歴は変わりません。
+</Callout>
+
+## 操作後の状態
+
+作業フォルダの内容とローカルリポジトリの最新Commitがそろいました。GitHubは1つ前の履歴のままです。
+
+<StateDiagram
+  title="Commit後・Push前"
+  caption="ローカルの履歴がGitHubより1つ進んだ"
+  states={[
+    { label: "作業フォルダ", detail: "READMEの変更がある", status: "same" },
+    { label: "ローカル", detail: "新しいCommitを記録", status: "ahead" },
+    { label: "GitHub", detail: "まだ古い履歴", status: "same" }
+  ]}
+/>
+
+## 内部で起きたこと
+
+選択した変更から新しいCommitが作られ、`main` のローカル履歴が1つ進みました。GitHub Desktopが「Push origin」を示すのは、まだGitHubへ送っていないCommitがあるからです。
+
+<OptionalDetails summary="SummaryとDescription">
+  Summaryは履歴一覧で最初に見える短い説明です。何を変えたかを命令形または簡潔な現在形で書きます。Descriptionには、なぜ必要か、注意点は何かなどを補足できます。
+</OptionalDetails>
+
+## よくある失敗
+
+`update` や `fix` だけでは変更内容が伝わりません。`Add practice note` のように対象と操作が分かる文にします。また、秘密情報が差分にないか、Commit前に必ず読みます。
+
+<Quiz
+  question="Commit直後、GitHubのWeb画面に新しい練習メモが見えません。理由はどれですか？"
+  options={[
+    "Commitが失敗したから",
+    "Commitはローカルへの記録で、まだPushしていないから",
+    "READMEはGitで扱えないから"
+  ]}
+  answer={1}
+  explanation="CommitとPushは別です。次のレッスンでローカルの履歴をGitHubへ送ります。"
+/>
+
+## 対応するGitコマンド
+
+作業フォルダで、変更を選んでからCommitします。`git add` は次のCommitに含める変更を選び、`git commit` はローカルリポジトリへ履歴を作ります。
+
+```bash
+git add README.md
+git commit -m "Add practice note"
+```
+
+## 次のレッスンへ
+
+次はローカルだけにある新しいCommitを、PushでGitHubへ送ります。

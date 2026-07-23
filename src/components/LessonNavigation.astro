@@ -1,0 +1,43 @@
+---
+import { withBase } from "../utils/paths";
+
+interface LessonSummary {
+  lesson: number;
+  title: string;
+  slug: string;
+}
+
+interface Props {
+  previous?: LessonSummary;
+  next?: LessonSummary;
+}
+
+const { previous, next } = Astro.props;
+---
+
+<nav class="lesson-navigation" aria-label="前後のレッスン">
+  <div>
+    {
+      previous && (
+        <a class="lesson-nav-link previous" href={withBase(`lessons/${previous.slug}/`)}>
+          <span>← 前のレッスン</span>
+          <strong>
+            Lesson {previous.lesson}: {previous.title}
+          </strong>
+        </a>
+      )
+    }
+  </div>
+  <div>
+    {
+      next && (
+        <a class="lesson-nav-link next" href={withBase(`lessons/${next.slug}/`)}>
+          <span>次のレッスン →</span>
+          <strong>
+            Lesson {next.lesson}: {next.title}
+          </strong>
+        </a>
+      )
+    }
+  </div>
+</nav>

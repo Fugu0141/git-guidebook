@@ -1,0 +1,56 @@
+---
+interface Props {
+  lesson: number;
+}
+const { lesson } = Astro.props;
+---
+
+<section
+  class="completion-card"
+  data-progress-card
+  data-lesson={lesson}
+  aria-labelledby={`completion-${lesson}`}
+>
+  <div>
+    <p class="eyebrow">学習記録</p>
+    <h2 id={`completion-${lesson}`}>このレッスンを完了しましたか？</h2>
+    <p>チェックはこのブラウザだけに保存されます。保存できなくても教材は利用できます。</p>
+  </div>
+  <label class="completion-toggle">
+    <input type="checkbox" data-progress-checkbox />
+    <span>完了として記録</span>
+  </label>
+  <p class="storage-status" data-storage-status aria-live="polite"></p>
+</section>
+
+<script>
+  const initializeProgress = () => {
+    document.querySelectorAll<HTMLElement>("[data-progress-card]").forEach((card) => {
+      if (card.dataset.ready === "true") return;
+      card.dataset.ready = "true";
+      const lesson = card.dataset.lesson;
+      const checkbox = card.querySelector<HTMLInputElement>("[data-progress-checkbox]");
+      const status = card.querySelector<HTMLElement>("[data-storage-status]");
+      if (!lesson || !checkbox || !status) return;
+      const key = `git-guidebook:lesson:${lesson}`;
+      try {
+        checkbox.checked = localStorage.getItem(key) === "complete";
+      } catch {
+        status.textContent = "この環境では記録を保存できませんが、学習は続けられます。";
+      }
+      checkbox.addEventListener("change", () => {
+        try {
+          if (checkbox.checked) localStorage.setItem(key, "complete");
+          else localStorage.removeItem(key);
+          status.textContent = checkbox.checked
+            ? "この端末に完了を記録しました。"
+            : "完了記録を外しました。";
+        } catch {
+          status.textContent = "記録を保存できませんでした。教材の利用には影響しません。";
+        }
+      });
+    });
+  };
+  initializeProgress();
+  document.addEventListener("astro:page-load", initializeProgress);
+</script>

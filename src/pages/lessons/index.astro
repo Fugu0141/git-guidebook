@@ -1,0 +1,45 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { withBase } from "../../utils/paths";
+
+const lessons = (await getCollection("lessons", ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.lesson - b.data.lesson
+);
+---
+
+<BaseLayout
+  title="レッスン一覧 | Git Guidebook"
+  description="Git GuidebookのLesson 0からLesson 11までを一覧で確認できます。"
+>
+  <section class="page-hero shell">
+    <p class="eyebrow">LESSON MAP</p>
+    <h1>レッスン一覧</h1>
+    <p class="lead">ひとつのリポジトリを育てながら、Gitの基本サイクルを順番にたどります。</p>
+  </section>
+  <section class="shell section">
+    <ol class="lesson-list">
+      {
+        lessons.map((lesson) => (
+          <li>
+            <a href={withBase(`lessons/${lesson.id}/`)}>
+              <span class="lesson-number">{String(lesson.data.lesson).padStart(2, "0")}</span>
+              <div>
+                <h2>{lesson.data.title}</h2>
+                <p>{lesson.data.description}</p>
+                <ul class="goal-tags" aria-label="学習目標">
+                  {lesson.data.goals.slice(0, 2).map((goal) => (
+                    <li>{goal}</li>
+                  ))}
+                </ul>
+              </div>
+              <span class="list-arrow" aria-hidden="true">
+                →
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+</BaseLayout>

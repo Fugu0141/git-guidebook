@@ -1,0 +1,114 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import StateDiagram from "../components/StateDiagram.astro";
+import { withBase } from "../utils/paths";
+
+const lessons = (await getCollection("lessons", ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.lesson - b.data.lesson
+);
+---
+
+<BaseLayout
+  title="Git Guidebook | Gitの流れを、現在地から理解する"
+  description="GitHub Desktopを使い、リポジトリ作成からPullまでを順番に体験する初心者向けGit教材です。"
+>
+  <section class="home-hero">
+    <div class="shell hero-grid">
+      <div>
+        <p class="eyebrow">Git初心者のための実践ガイド</p>
+        <h1>Gitの操作を、<br /><span>「どこが変わるか」</span>から理解する。</h1>
+        <p class="lead">
+          GitHub Desktopを使って、小さなプロジェクトを作るところから始めます。
+          Commit・Push・Pullの違いを、作業フォルダ、ローカル、GitHubの状態で確かめましょう。
+        </p>
+        <div class="button-row">
+          <a class="button primary" href={withBase("lessons/00-version-control/")}
+            >Lesson 0から始める</a
+          >
+          <a class="button secondary" href={withBase("lessons/")}>全レッスンを見る</a>
+        </div>
+        <p class="hero-note">全12レッスン · プログラミング経験不要 · 自分のペースで学習</p>
+      </div>
+      <div class="hero-panel" aria-label="このコースで区別する3つの場所">
+        <p class="panel-label">まず覚える3つの場所</p>
+        <ol>
+          <li><span>01</span><strong>作業フォルダ</strong><small>ファイルを編集する場所</small></li>
+          <li>
+            <span>02</span><strong>ローカルリポジトリ</strong><small
+              >端末内で履歴を記録する場所</small
+            >
+          </li>
+          <li>
+            <span>03</span><strong>リモートリポジトリ</strong><small
+              >GitHub上で履歴を共有する場所</small
+            >
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="shell section">
+    <div class="section-heading">
+      <p class="eyebrow">COURSE FLOW</p>
+      <h2>実際の仕事と同じ順番で進みます</h2>
+      <p>操作名を暗記するのではなく、ひとつ前の状態から「次に何が必要か」を判断します。</p>
+    </div>
+    <StateDiagram
+      title="ひとり開発の基本サイクル"
+      caption="作る → 記録する → 共有する → 統合する → 同期する"
+      states={[
+        { label: "編集", detail: "作業フォルダを変更" },
+        { label: "Commit", detail: "ローカルへ記録" },
+        { label: "Push", detail: "GitHubへ送信" },
+        { label: "Merge", detail: "mainへ統合" },
+        { label: "Pull", detail: "端末へ取り込み" }
+      ]}
+    />
+  </section>
+
+  <section class="lesson-preview section">
+    <div class="shell">
+      <div class="section-heading row">
+        <div>
+          <p class="eyebrow">12 LESSONS</p>
+          <h2>小さな理解を積み重ねる</h2>
+        </div>
+        <a href={withBase("lessons/")}>一覧で見る →</a>
+      </div>
+      <ol class="lesson-card-grid">
+        {
+          lessons.slice(0, 6).map((lesson) => (
+            <li>
+              <a href={withBase(`lessons/${lesson.id}/`)}>
+                <span>Lesson {lesson.data.lesson}</span>
+                <h3>{lesson.data.title}</h3>
+                <p>{lesson.data.description}</p>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="shell section promise-grid">
+    <div>
+      <p class="eyebrow">OUR APPROACH</p>
+      <h2>画面のクリックだけでは終わりません</h2>
+    </div>
+    <ul class="promise-list">
+      <li>
+        <strong>理由から始める</strong><span>何のための操作か分かってから手を動かします。</span>
+      </li>
+      <li>
+        <strong>3つの場所を区別する</strong><span>どこに何が反映されたかを毎回確認します。</span>
+      </li>
+      <li>
+        <strong>コマンドにつなげる</strong><span>最後に同じ操作を表すGitコマンドも紹介します。</span
+        >
+      </li>
+    </ul>
+  </section>
+</BaseLayout>

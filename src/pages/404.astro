@@ -1,0 +1,19 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { withBase } from "../utils/paths";
+---
+
+<BaseLayout
+  title="ページが見つかりません | Git Guidebook"
+  description="指定されたページは見つかりませんでした。"
+>
+  <section class="not-found shell">
+    <p class="eyebrow">404</p>
+    <h1>このページは見つかりませんでした</h1>
+    <p>URLが変わったか、入力に誤りがあるかもしれません。学習内容は失われていません。</p>
+    <div class="button-row">
+      <a class="button primary" href={withBase()}>ホームへ戻る</a>
+      <a class="button secondary" href={withBase("lessons/")}>レッスン一覧を見る</a>
+    </div>
+  </section>
+</BaseLayout>

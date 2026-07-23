@@ -1,0 +1,42 @@
+---
+interface State {
+  label: string;
+  detail: string;
+  status?: "changed" | "same" | "ahead";
+}
+
+interface Props {
+  title: string;
+  caption: string;
+  states: State[];
+}
+
+const { title, caption, states } = Astro.props;
+---
+
+<figure class="state-diagram">
+  <figcaption>
+    <strong>{title}</strong>
+    <span>{caption}</span>
+  </figcaption>
+  <div class="state-grid">
+    {
+      states.map((state, index) => (
+        <>
+          <section class:list={["state-card", state.status && `state-${state.status}`]}>
+            <span class="state-number" aria-hidden="true">
+              {index + 1}
+            </span>
+            <h3>{state.label}</h3>
+            <p>{state.detail}</p>
+          </section>
+          {index < states.length - 1 && (
+            <span class="state-arrow" aria-hidden="true">
+              →
+            </span>
+          )}
+        </>
+      ))
+    }
+  </div>
+</figure>

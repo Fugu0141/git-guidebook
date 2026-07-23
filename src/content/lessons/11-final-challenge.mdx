@@ -1,0 +1,125 @@
+---
+lesson: 11
+title: "一人で最初から再現する"
+description: "リポジトリ作成からPullまでを、自分で状態を判断しながら再現します。"
+goals:
+  - "Gitの基本サイクルを順番に再現できる"
+  - "各操作がどこを変えるか自分の言葉で説明できる"
+draft: false
+---
+
+import Callout from "../../components/Callout.astro";
+import OptionalDetails from "../../components/OptionalDetails.astro";
+import Quiz from "../../components/Quiz.astro";
+import StateDiagram from "../../components/StateDiagram.astro";
+
+## なぜ最終課題を行うのか
+
+ボタンの場所を暗記できたかではなく、現在の状態から次の操作を判断できるか確かめます。分からなくなったら、作業フォルダ・ローカルリポジトリ・リモートリポジトリのどこが進んでいるかを書き出してください。
+
+## 操作前の状態
+
+新しい練習用リポジトリを使います。実在する仕事や授業のリポジトリでは行わないでください。
+
+<StateDiagram
+  title="最終課題の開始地点"
+  caption="まだ3つの場所は用意されていない"
+  states={[
+    { label: "作業フォルダ", detail: "なし", status: "same" },
+    { label: "ローカル", detail: "なし", status: "same" },
+    { label: "GitHub", detail: "これから作成", status: "changed" }
+  ]}
+/>
+
+## 課題：基本サイクルを再現する
+
+次のチェックポイントを、前のレッスンを必要なときだけ見ながら進めます。
+
+1. GitHubで `git-guidebook-challenge` リポジトリを作り、READMEを追加する
+2. GitHub Desktopで端末へCloneし、保存場所を確認する
+3. READMEへ「最終課題」の見出しと目標を追加する
+4. 差分を読み、`Add final challenge goal` とCommitする
+5. PushしてGitHub上のmainを確認する
+6. `add-reflection` Branchを作ってPublishする
+7. READMEへ振り返りを1行追加し、Commit、Pushする
+8. baseをmain、compareをadd-reflectionとしてPull Requestを作る
+9. Files changedを確認してMergeする
+10. GitHub Desktopでmainへ戻り、Fetch、Pullする
+11. 作業フォルダ、ローカルmain、GitHub上のmainが同じ内容か確認する
+
+<Callout type="tip" title="迷ったときの3つの質問">
+  いまどのBranchにいるか。未Commit変更はあるか。ローカルとGitHubのどちらの履歴が先に進んでいるか。この3つを確認すると、次の操作を絞れます。
+</Callout>
+
+## 操作後の状態
+
+3つの場所が同じ最新履歴を持ち、mainには最終課題の目標と振り返りが含まれています。
+
+<StateDiagram
+  title="最終課題の完成状態"
+  caption="編集・記録・共有・統合・同期が一巡した"
+  states={[
+    { label: "作業フォルダ", detail: "最新README", status: "same" },
+    { label: "ローカル main", detail: "Merge後の履歴", status: "same" },
+    { label: "GitHub main", detail: "同じ履歴", status: "same" }
+  ]}
+/>
+
+## 操作の意味を説明する
+
+| 操作         | 何をするか                                                   |
+| ------------ | ------------------------------------------------------------ |
+| Clone        | リモートのファイルと履歴を端末へ取得し、接続を設定する       |
+| Commit       | 選んだ変更をローカルリポジトリの履歴へ記録する               |
+| Push         | ローカルのCommit履歴をリモートへ送る                         |
+| Branch       | 履歴の進む先を分ける                                         |
+| Pull Request | あるBranchの変更を別のBranchへ取り込む提案をGitHub上に作る   |
+| Merge        | 分かれた履歴を取り込み先Branchへ統合する                     |
+| Pull         | リモートの新しい履歴を取得し、現在のローカルBranchへ取り込む |
+
+## 内部で起きたこと
+
+最初はGitHubだけにあった履歴をCloneし、ローカルで新しいCommitを作り、Pushしました。Branchで履歴を分け、Pull Requestを経てMergeし、最後にPullして端末へ反映しました。
+
+<OptionalDetails summary="対応するコマンドの流れ">
+  GUIとコマンドは完全に1対1ではありませんが、基本サイクルは `clone → add → commit → push → switch →
+  push → pull` と対応します。Pull Requestの作成とWeb上のMergeはGitHubの機能です。
+</OptionalDetails>
+
+## よくある失敗と戻り方
+
+- GitHubに見えない: Commit後ならPushしたか確認します。
+- Commitできない: 保存済みの変更と選択対象があるか確認します。
+- mainが最新でない: Current Branchをmainにし、FetchとPullを確認します。
+- 差分が想定外: 操作を進めず、現在のリポジトリ、Branch、Changesを確認します。
+
+変更を消す操作は急いで行いません。現在地を確認し、必要なら状況をメモして経験者へ相談します。
+
+<Quiz
+  question="GitHub上でPull RequestをMergeした後、端末内のmainを最新にする操作はどれですか？"
+  options={["Commit", "Pull", "Publish branch"]}
+  answer={1}
+  explanation="GitHubで進んだ履歴をローカルmainへ取り込むため、mainへ切り替えてPullします。"
+/>
+
+## 対応するGitコマンド
+
+作業フォルダで、各段階の状態を確認しながら実行します。`USER`とURLは自分の教材用リポジトリへ置き換えます。
+
+```bash
+git clone https://github.com/USER/git-guidebook-challenge.git
+git add README.md
+git commit -m "Add final challenge goal"
+git push origin main
+git switch -c add-reflection
+git push -u origin add-reflection
+git add README.md
+git commit -m "Add reflection"
+git push
+git switch main
+git pull origin main
+```
+
+## コース修了
+
+お疲れさまでした。操作名が思い出せないときも、「いま何がどこにあり、どこを進めたいか」を確認できれば、次の一手を判断できます。これがGitを安全に使い続ける土台です。

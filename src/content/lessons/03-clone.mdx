@@ -1,0 +1,114 @@
+---
+lesson: 3
+title: "Cloneして端末へ持ってくる"
+description: "GitHub上の履歴から、端末内の作業場所とローカルリポジトリを作ります。"
+goals:
+  - "コピーとCloneの違いを説明できる"
+  - "保存場所を確認してGitHub DesktopからCloneできる"
+draft: false
+---
+
+import Callout from "../../components/Callout.astro";
+import OptionalDetails from "../../components/OptionalDetails.astro";
+import Quiz from "../../components/Quiz.astro";
+import ScreenshotPlaceholder from "../../components/ScreenshotPlaceholder.astro";
+import StateDiagram from "../../components/StateDiagram.astro";
+
+## なぜCloneするのか
+
+GitHub上のリモートリポジトリだけでは、端末のエディターでファイルを編集できません。Cloneは、リモートのファイルと履歴を端末へ複製し、今後のPushやPullに使う接続情報も設定する操作です。
+
+## 操作前の状態
+
+GitHub上にはREADMEと履歴がありますが、端末内にはありません。
+
+<StateDiagram
+  title="Clone前"
+  caption="リモートだけに履歴がある"
+  states={[
+    { label: "作業フォルダ", detail: "なし", status: "same" },
+    { label: "ローカル", detail: "なし", status: "same" },
+    { label: "GitHub", detail: "READMEの履歴がある", status: "ahead" }
+  ]}
+/>
+
+## 手順：GitHub DesktopでCloneする
+
+1. GitHub Desktopを開きます。
+2. **File → Clone repository…** を選びます。
+3. **GitHub.com** タブで `git-guidebook-practice` を選びます。
+4. **Local path** を確認します。個人名が見える場所をスクリーンショットへ載せないでください。
+5. **Clone** を選び、処理が終わるまで待ちます。
+6. **Repository → Show in Explorer**（macOSではShow in Finder）で保存場所を開きます。
+
+<ScreenshotPlaceholder
+  filename="lesson-03-step-01-clone-repository.png"
+  title="GitHub DesktopのClone repository画面"
+  description="対象リポジトリとLocal pathを確認してからCloneする流れを示すため"
+  requiredState={[
+    "GitHub Desktopに教材用アカウントでサインイン済み",
+    "git-guidebook-practiceがGitHub上に存在する",
+    "GitHub.comタブで対象リポジトリを選択済み",
+    "個人名を含まない安全なLocal pathを使用"
+  ]}
+  capture="対象リポジトリとLocal pathを選び、Cloneボタンを押す直前で撮影する"
+  crop="Clone repositoryダイアログ内のリポジトリ名、Local path、Cloneボタン"
+  exclude="OSユーザー名、メールアドレス、他のリポジトリ名、アクセストークン"
+  altDraft="GitHub DesktopのClone repository画面。git-guidebook-practiceと保存先が選ばれ、Cloneボタンを押す直前の状態"
+  priority="required"
+  variant="dialog"
+/>
+
+<Callout type="tip" title="Local pathを読む">
+  Local
+  pathは作業フォルダを作る親フォルダです。あとでエディターから開ける場所を選び、保存先を覚えておきます。
+</Callout>
+
+## 操作後の状態
+
+端末内に作業フォルダができ、その中でローカルリポジトリの履歴が管理されます。Clone直後はローカルとリモートの履歴が同じです。
+
+<StateDiagram
+  title="Clone後"
+  caption="作業フォルダとローカル履歴が端末にできた"
+  states={[
+    { label: "作業フォルダ", detail: "README.mdを編集できる", status: "changed" },
+    { label: "ローカル", detail: "GitHubと同じ履歴", status: "changed" },
+    { label: "GitHub", detail: "元の履歴のまま", status: "same" }
+  ]}
+/>
+
+## 内部で起きたこと
+
+GitはリモートのCommit履歴とファイルを取得し、端末内にローカルリポジトリを作りました。さらに、取得元のリモートを通常 `origin` という名前で登録しました。
+
+<OptionalDetails summary="ダウンロードZIPとの違い">
+  ZIPのダウンロードは現在のファイルをコピーしますが、通常はGitの履歴やリモートとの接続情報を含みません。Cloneは履歴を含むリポジトリとして取得するため、その後Commit、Push、Pullできます。
+</OptionalDetails>
+
+## よくある失敗
+
+すでに同名フォルダがあり、中にファイルがあるとCloneできないことがあります。既存フォルダを消さず、別の安全な保存先を選んでください。
+
+<Quiz
+  question="Clone直後、作業フォルダ・ローカル・GitHubの履歴はどうなっていますか？"
+  options={[
+    "ローカルとGitHubは同じ履歴で、作業フォルダに対応するファイルがある",
+    "GitHubの履歴は消える",
+    "作業フォルダだけができ、履歴は取得されない"
+  ]}
+  answer={0}
+  explanation="Cloneはファイルだけでなく履歴とリモート接続も端末へ用意します。"
+/>
+
+## 対応するGitコマンド
+
+親フォルダで実行します。URLは自分の教材用リポジトリのものへ置き換えます。成功すると作業フォルダとローカルリポジトリが作られます。
+
+```bash
+git clone https://github.com/USER/git-guidebook-practice.git
+```
+
+## 次のレッスンへ
+
+次は作業フォルダのREADMEを編集し、GitHub Desktopで差分を読みます。まだCommitはしません。
