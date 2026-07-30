@@ -48,6 +48,25 @@ test("主要レイアウトにランドマークとLesson本文構造がある",
   assert.match(lessonLayout, /role="progressbar"/);
 });
 
+test("ホームと一覧が初心者向けの学習判断情報を示す", async () => {
+  const home = await readFile(new URL("../src/pages/index.astro", import.meta.url), "utf8");
+  const lessonList = await readFile(
+    new URL("../src/pages/lessons/index.astro", import.meta.url),
+    "utf8"
+  );
+  for (const phrase of [
+    "プログラミング経験は不要",
+    "1つの練習用リポジトリ",
+    "GitHub DesktopからCLIへ",
+    "困ったときのGit"
+  ]) {
+    assert.ok(home.includes(phrase), `ホームに「${phrase}」がありません`);
+  }
+  for (const field of ["できるようになること", "目安時間", "前提", "使う画面", "コマンド"]) {
+    assert.ok(lessonList.includes(field), `一覧に「${field}」がありません`);
+  }
+});
+
 test("Pages workflowはmainへのpushと手動実行に対応する", async () => {
   const workflow = await readFile(
     new URL("../.github/workflows/deploy-pages.yml", import.meta.url),

@@ -16,7 +16,7 @@ Git Guidebook MVPの教材内にある `ScreenshotPlaceholder` と同期する�
 - 切り抜き: Repository nameからCreate repositoryボタンまで、選択状態が読める範囲
 - 除外情報: メールアドレス、通知、実在する非公開リポジトリ名、個人名、アクセストークン
 - alt案: GitHubの新規リポジトリ作成画面。git-guidebook-practiceという名前とREADME追加が設定され、作成ボタンを押す直前の状態
-- 掲載位置: Lesson 2「手順：GitHubで作成する」の手順7直後
+- 掲載位置: Lesson 2「一緒に操作」の手順8直後
 
 ## lesson-03-step-01-clone-repository.png
 
@@ -30,7 +30,7 @@ Git Guidebook MVPの教材内にある `ScreenshotPlaceholder` と同期する�
 - 切り抜き: Clone repositoryダイアログ内のリポジトリ名、Local path、Cloneボタン
 - 除外情報: OSユーザー名、メールアドレス、他のリポジトリ名、アクセストークン
 - alt案: GitHub DesktopのClone repository画面。git-guidebook-practiceと保存先が選ばれ、Cloneボタンを押す直前の状態
-- 掲載位置: Lesson 3「手順：GitHub DesktopでCloneする」の手順6直後
+- 掲載位置: Lesson 3「一緒に操作」の手順6直後
 
 ## lesson-04-step-02-review-diff.png
 
@@ -44,7 +44,7 @@ Git Guidebook MVPの教材内にある `ScreenshotPlaceholder` と同期する�
 - 切り抜き: Changes一覧、README.mdのチェック、追加行を示す差分
 - 除外情報: メールアドレス、他のリポジトリ名、OSユーザー名、個人情報、秘密情報
 - alt案: GitHub DesktopのChanges画面。README.mdが選択され、追加した練習メモの行が差分として表示されている
-- 掲載位置: Lesson 4「手順：READMEを編集する」の手順5直後
+- 掲載位置: Lesson 4「一緒に操作」の手順5直後
 
 ## lesson-05-step-03-create-commit.png
 
@@ -58,7 +58,7 @@ Git Guidebook MVPの教材内にある `ScreenshotPlaceholder` と同期する�
 - 切り抜き: Changes一覧、README.mdの差分、Summary入力欄、Commit to mainボタン
 - 除外情報: メールアドレス、他のリポジトリ名、OSユーザー名、個人情報
 - alt案: GitHub DesktopのChanges画面。README.mdの差分とAdd practice noteというSummaryが表示され、Commit to mainを押す直前の状態
-- 掲載位置: Lesson 5「手順：変更をCommitする」の手順6直後
+- 掲載位置: Lesson 5「一緒に操作」の手順6直後
 
 ## lesson-06-step-02-push-origin-after.png
 
@@ -72,7 +72,7 @@ Git Guidebook MVPの教材内にある `ScreenshotPlaceholder` と同期する�
 - 切り抜き: リポジトリ名、main表示、最新Commit、READMEの追加部分
 - 除外情報: ブラウザの他タブ、通知、メールアドレス、個人名、非公開リポジトリ
 - alt案: GitHub上のgit-guidebook-practiceリポジトリ。mainの最新CommitがAdd practice noteで、READMEに練習メモが表示されている
-- 掲載位置: Lesson 6「手順：Pushして確認する」の手順4直後
+- 掲載位置: Lesson 6「一緒に操作」の手順4直後
 
 ## lesson-07-step-02-create-branch.png
 
@@ -86,7 +86,7 @@ Git Guidebook MVPの教材内にある `ScreenshotPlaceholder` と同期する�
 - 切り抜き: Current Branch周辺とNew Branchダイアログ全体
 - 除外情報: メールアドレス、他のリポジトリ名、OSユーザー名、個人情報
 - alt案: GitHub DesktopのNew Branchダイアログ。add-learning-goalという名前を入力し、mainからBranchを作成する直前の状態
-- 掲載位置: Lesson 7「手順：Branchを作成してPublishする」の手順6直後
+- 掲載位置: Lesson 7「一緒に操作」の手順6直後
 
 ## lesson-08-step-03-create-pull-request.png
 
@@ -100,7 +100,7 @@ Git Guidebook MVPの教材内にある `ScreenshotPlaceholder` と同期する�
 - 切り抜き: base/compare、タイトル、説明、Create pull requestボタン
 - 除外情報: 通知、メールアドレス、他のリポジトリ、個人名、ブラウザの他タブ
 - alt案: GitHubのPull Request作成画面。baseがmain、compareがadd-learning-goalで、タイトルと説明を入力し作成する直前の状態
-- 掲載位置: Lesson 8「手順：提案を作る」の手順6直後
+- 掲載位置: Lesson 8「一緒に操作」の手順6直後
 
 ## lesson-09-step-02-merge-complete.png
 
@@ -114,7 +114,7 @@ Git Guidebook MVPの教材内にある `ScreenshotPlaceholder` と同期する�
 - 切り抜き: Pull Requestタイトル、Merged状態、Merge結果、Delete branchボタン
 - 除外情報: 通知、メールアドレス、個人名、他のリポジトリ、ブラウザの他タブ
 - alt案: GitHubのPull Request画面。Add learning goalがMergedになり、作業Branchを削除できる状態
-- 掲載位置: Lesson 9「手順：確認してMergeする」の手順6直後
+- 掲載位置: Lesson 9「一緒に操作」の手順6直後
 
 ## lesson-10-step-03-pull-origin-after.png
 
@@ -128,7 +128,7 @@ Git Guidebook MVPの教材内にある `ScreenshotPlaceholder` と同期する�
 - 切り抜き: Current Branch、Historyの最新項目、Fetch origin表示
 - 除外情報: メールアドレス、他のリポジトリ名、OSユーザー名、個人情報
 - alt案: GitHub DesktopのHistory画面。現在のBranchがmainで、Pull後の最新履歴が表示されている
-- 掲載位置: Lesson 10「手順：mainへ切り替えてPullする」の手順6直後
+- 掲載位置: Lesson 10「一緒に操作」の手順6直後
 
 ## 集計
 

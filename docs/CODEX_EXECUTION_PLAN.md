@@ -159,10 +159,34 @@ Codexは、上から順に未完了の項目を実装します。各まとまり
 - [x] 残課題をIssue候補としてまとめる
 - [x] `docs/CODEX_COMPLETION_REPORT.md`を作成する
 
+## Milestone 8: 実践教材への深化
+
+- [x] 目安時間、前提、使用画面、任意コマンド有無をfrontmatterへ追加する
+- [x] Lesson 0〜2を13項目の教材標準へ改訂する
+- [x] Lesson 3〜11を同じ教材標準へ改訂する
+- [x] 全Lessonへ用語・状態判断・次の操作の3問を追加する
+- [x] 成功確認、自習課題、迷いやすい3項目、コマンド出力の読み方を追加する
+- [x] CheckList、PracticeTask、QuestionList、CommandGuideを再利用可能な部品として実装する
+- [x] ホームでプログラミング経験不要、1リポジトリ実習、任意CLI、将来コースを説明する
+- [x] レッスン一覧へ操作、成果、時間、前提、使用画面、CLI情報を表示する
+- [x] 次期コースの到達点と順序をカリキュラムへ追加する
+- [x] 標準構成と3種類の確認問題を全Lessonで自動検証する
+- [x] スクリーンショット依頼の掲載位置を新しい見出しへ同期する
+
+### 実装ノート
+
+- 実装日: 2026-07-31
+- 既存のAstro、MDX、状態図、Placeholder、アクセシビリティ、GitHub Pages base pathを維持した
+- 架空スクリーンショットやキャラクター画像は追加していない
+- Lesson 0〜10は `git-guidebook-practice`、Lesson 11は `git-guidebook-challenge` を使う
+- コマンドは全Lessonで任意とし、GitHub Desktopの本線だけでも完走できる
+
 ## 実装メモ
 
-- 実装日: 2026-07-23
+- 初回MVP実装日: 2026-07-23
+- 教材深化日: 2026-07-31
 - Lesson 0〜11、共通UI、学習機能、自動検証、GitHub Pages workflowを実装済み
+- 全Lessonが13項目の教材標準、3種類の確認問題、成功確認、自習課題、任意コマンド解説を満たす
 - 代替ブロックは9件（必須9、任意0）で `docs/SCREENSHOT_REQUESTS.md` と自動同期検証済み
 - npm auditの高重要度指摘を受け、Astro 7系へ更新して脆弱性0件を確認
 - 公開、実画像、初心者利用テストは所有者・人間による作業のため `docs/CODEX_BLOCKERS.md` に記録
