@@ -16,16 +16,38 @@ draft: false
 ---
 
 import Callout from "../../components/Callout.astro";
+import CheckList from "../../components/CheckList.astro";
+import CommandGuide from "../../components/CommandGuide.astro";
 import OptionalDetails from "../../components/OptionalDetails.astro";
+import PracticeTask from "../../components/PracticeTask.astro";
+import QuestionList from "../../components/QuestionList.astro";
 import Quiz from "../../components/Quiz.astro";
 import ScreenshotPlaceholder from "../../components/ScreenshotPlaceholder.astro";
 import StateDiagram from "../../components/StateDiagram.astro";
 
-## なぜCloneするのか
+## 今回の場面
 
 GitHub上のリモートリポジトリだけでは、端末のエディターでファイルを編集できません。Cloneは、リモートのファイルと履歴を端末へ複製し、今後のPushやPullに使う接続情報も設定する操作です。
 
-## 操作前の状態
+## 今回できるようになること
+
+- ファイルのコピー、ZIPのダウンロード、Cloneの違いを説明できる
+- 保存先を確認してGitHub DesktopからCloneできる
+- Clone直後に3つの場所がどの状態か確認できる
+
+## まず簡単に説明
+
+Cloneは、GitHub上のプロジェクトを「Gitの履歴が使える作業場所」として端末へ持ってくる操作です。ファイルだけでなくCommit履歴とリモートへの接続情報も取得します。
+
+## もう少し正確に
+
+Cloneすると、選んだLocal pathの下に作業フォルダができ、その中にローカルリポジトリが用意されます。取得元は通常 `origin` という名前で登録されます。
+
+<OptionalDetails summary="ZIPのダウンロードとの違い">
+  ZIPのダウンロードは現在のファイルをコピーしますが、通常はGitの履歴やリモートとの接続情報を含みません。Cloneは履歴を含むリポジトリとして取得するため、その後Commit、Push、Pullできます。
+</OptionalDetails>
+
+## 操作前
 
 GitHub上にはREADMEと履歴がありますが、端末内にはありません。
 
@@ -39,7 +61,7 @@ GitHub上にはREADMEと履歴がありますが、端末内にはありませ�
   ]}
 />
 
-## 手順：GitHub DesktopでCloneする
+## 一緒に操作
 
 1. GitHub Desktopを開きます。
 2. **File → Clone repository…** を選びます。
@@ -71,9 +93,19 @@ GitHub上にはREADMEと履歴がありますが、端末内にはありませ�
   pathは作業フォルダを作る親フォルダです。あとでエディターから開ける場所を選び、保存先を覚えておきます。
 </Callout>
 
-## 操作後の状態
+## 操作直後の確認
 
 端末内に作業フォルダができ、その中でローカルリポジトリの履歴が管理されます。Clone直後はローカルとリモートの履歴が同じです。
+
+<CheckList
+  items={[
+    "GitHub Desktop上部に git-guidebook-practice が表示されている",
+    "Current Branchがmainになっている",
+    "Changesに未Commit変更がない",
+    "Show in ExplorerまたはShow in FinderでREADME.mdを確認できる",
+    "GitHub上とローカルの最新履歴が同じ"
+  ]}
+/>
 
 <StateDiagram
   title="Clone後"
@@ -89,15 +121,52 @@ GitHub上にはREADMEと履歴がありますが、端末内にはありませ�
 
 GitはリモートのCommit履歴とファイルを取得し、端末内にローカルリポジトリを作りました。さらに、取得元のリモートを通常 `origin` という名前で登録しました。
 
-<OptionalDetails summary="ダウンロードZIPとの違い">
-  ZIPのダウンロードは現在のファイルをコピーしますが、通常はGitの履歴やリモートとの接続情報を含みません。Cloneは履歴を含むリポジトリとして取得するため、その後Commit、Push、Pullできます。
-</OptionalDetails>
+## 初心者が迷いやすいポイント
 
-## よくある失敗
+<QuestionList
+  items={[
+    {
+      question: "同名フォルダがあるためCloneできません。",
+      answer:
+        "既存フォルダを削除せず、中身を確認します。別の親フォルダか、重複しない安全な保存先を選んでください。"
+    },
+    {
+      question: "Clone先がどこか分からなくなりました。",
+      answer:
+        "GitHub DesktopのRepositoryメニューからShow in Explorer（macOSではShow in Finder）を選びます。表示された場所が作業フォルダです。"
+    },
+    {
+      question: "GitHubのREADMEを直したのに端末側が変わりません。",
+      answer:
+        "Clone後の2つは自動で常に同期するわけではありません。GitHub側があとから進んだ場合はFetchやPullが必要です。"
+    }
+  ]}
+/>
 
-すでに同名フォルダがあり、中にファイルがあるとCloneできないことがあります。既存フォルダを消さず、別の安全な保存先を選んでください。
+## 自分でやってみる
+
+<PracticeTask title="作業フォルダとリモートURLを自分で見つける">
+  GitHub Desktopのメニューから作業フォルダを開き、`README.md` の場所を確認します。次に **Repository
+  settings** のRemote欄またはGitHubのCodeメニューを見て、接続先が自分の `git-guidebook-practice`
+  であることを確認してください。URLに個人名が含まれる場合は公開の画面共有へ載せません。
+</PracticeTask>
+
+## 確認問題
 
 <Quiz
+  kind="用語"
+  question="CloneとZIPダウンロードの主な違いはどれですか？"
+  options={[
+    "Cloneは履歴とリモート接続も用意する",
+    "CloneはREADMEを削除する",
+    "ZIPだけが端末へファイルを置ける"
+  ]}
+  answer={0}
+  explanation="Cloneはファイルに加えてGitの履歴と接続情報を取得します。"
+/>
+
+<Quiz
+  kind="状態判断"
   question="Clone直後、作業フォルダ・ローカル・GitHubの履歴はどうなっていますか？"
   options={[
     "ローカルとGitHubは同じ履歴で、作業フォルダに対応するファイルがある",
@@ -108,13 +177,32 @@ GitはリモートのCommit履歴とファイルを取得し、端末内にロ�
   explanation="Cloneはファイルだけでなく履歴とリモート接続も端末へ用意します。"
 />
 
+<Quiz
+  kind="次の操作"
+  question="CloneしたREADMEを編集したいとき、最初に開く場所はどこですか？"
+  options={["端末内の作業フォルダ", "GitHubのアカウント設定", "Pull Request画面"]}
+  answer={0}
+  explanation="実際のファイル編集は端末内の作業フォルダで行います。"
+/>
+
 ## 対応するGitコマンド
 
-親フォルダで実行します。URLは自分の教材用リポジトリのものへ置き換えます。成功すると作業フォルダとローカルリポジトリが作られます。
+<CommandGuide
+  directory="作業フォルダを作りたい親フォルダで実行します。作成予定のフォルダ内ではありません。"
+  prerequisite="リポジトリのHTTPS URLが分かり、同名の中身入りフォルダが存在しないこと。"
+  effect="新しい作業フォルダ、ローカルリポジトリ、origin接続を作ります。GitHub側は変更しません。"
+  desktopEquivalent="File → Clone repository…で対象とLocal pathを選び、Cloneする操作です。"
+  output="Cloning into...の後に処理が完了し、同名フォルダができれば成功です。"
+  firstCheck="Repository not foundならURLと閲覧権限を、already existsなら保存先の同名フォルダを確認します。"
+>
+  ```bash git clone https://github.com/USER/git-guidebook-practice.git ```
+</CommandGuide>
 
-```bash
-git clone https://github.com/USER/git-guidebook-practice.git
-```
+## できるようになったこと
+
+- 保存先を確認してリモートリポジトリをCloneできる
+- Cloneで作業フォルダ、ローカル履歴、origin接続ができると説明できる
+- Clone直後はローカルとGitHubの履歴がそろっていると確認できる
 
 ## 次のレッスンへ
 
