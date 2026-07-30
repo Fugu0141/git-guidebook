@@ -1,12 +1,13 @@
 ---
 interface Props {
+  kind?: "用語" | "状態判断" | "次の操作";
   question: string;
   options: string[];
   answer: number;
   explanation: string;
 }
 
-const { question, options, answer, explanation } = Astro.props;
+const { kind = "状態判断", question, options, answer, explanation } = Astro.props;
 const quizId = `quiz-${Math.random().toString(36).slice(2, 9)}`;
 ---
 
@@ -17,8 +18,8 @@ const quizId = `quiz-${Math.random().toString(36).slice(2, 9)}`;
   data-explanation={explanation}
   aria-labelledby={`${quizId}-title`}
 >
-  <p class="quiz-label">確認問題</p>
-  <h2 id={`${quizId}-title`}>{question}</h2>
+  <p class="quiz-label">確認問題：{kind}</p>
+  <h3 id={`${quizId}-title`}>{question}</h3>
   <fieldset>
     <legend class="visually-hidden">{question}</legend>
     {

@@ -15,7 +15,10 @@ const lessons = (await getCollection("lessons", ({ data }) => !data.draft)).sort
   <section class="page-hero shell">
     <p class="eyebrow">LESSON MAP</p>
     <h1>レッスン一覧</h1>
-    <p class="lead">ひとつのリポジトリを育てながら、Gitの基本サイクルを順番にたどります。</p>
+    <p class="lead">
+      ひとつの練習用リポジトリを育てながら、Gitの基本サイクルを順番にたどります。Lesson
+      0から進めれば、各レッスンの開始状態が自然につながります。
+    </p>
   </section>
   <section class="shell section">
     <ol class="lesson-list">
@@ -27,11 +30,32 @@ const lessons = (await getCollection("lessons", ({ data }) => !data.draft)).sort
               <div>
                 <h2>{lesson.data.title}</h2>
                 <p>{lesson.data.description}</p>
-                <ul class="goal-tags" aria-label="学習目標">
-                  {lesson.data.goals.slice(0, 2).map((goal) => (
-                    <li>{goal}</li>
-                  ))}
-                </ul>
+                <dl class="lesson-meta">
+                  <div>
+                    <dt>操作</dt>
+                    <dd>{lesson.data.title}</dd>
+                  </div>
+                  <div>
+                    <dt>できるようになること</dt>
+                    <dd>{lesson.data.goals[0]}</dd>
+                  </div>
+                  <div>
+                    <dt>目安時間</dt>
+                    <dd>{lesson.data.duration}</dd>
+                  </div>
+                  <div>
+                    <dt>前提</dt>
+                    <dd>{lesson.data.prerequisite}</dd>
+                  </div>
+                  <div>
+                    <dt>使う画面</dt>
+                    <dd>{lesson.data.interfaces.join("・")}</dd>
+                  </div>
+                  <div>
+                    <dt>コマンド</dt>
+                    <dd>{lesson.data.commandOptional ? "任意（折りたたみ解説あり）" : "なし"}</dd>
+                  </div>
+                </dl>
               </div>
               <span class="list-arrow" aria-hidden="true">
                 →
@@ -41,5 +65,12 @@ const lessons = (await getCollection("lessons", ({ data }) => !data.draft)).sort
         ))
       }
     </ol>
+  </section>
+  <section class="shell course-note" aria-labelledby="course-note-title">
+    <h2 id="course-note-title">このコースの進め方</h2>
+    <p>
+      各レッスンでは操作前後の状態図、成功確認、自分で試す課題、用語・状態・次の操作の3問を用意しています。コマンド欄は任意なので、最初はGitHub
+      Desktopの本線だけで完走できます。
+    </p>
   </section>
 </BaseLayout>

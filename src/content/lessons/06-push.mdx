@@ -5,20 +5,50 @@ description: "ローカルリポジトリで進んだCommit履歴を、GitHub上
 goals:
   - "CommitとPushの違いを説明できる"
   - "Push後にGitHub上の履歴を確認できる"
+duration: "10〜20分"
+prerequisite: "Lesson 5のCommitがローカルmainにある"
+interfaces:
+  - "GitHub Desktop"
+  - "ブラウザ"
+  - "任意: ターミナル"
+commandOptional: true
 draft: false
 ---
 
 import Callout from "../../components/Callout.astro";
+import CheckList from "../../components/CheckList.astro";
+import CommandGuide from "../../components/CommandGuide.astro";
 import OptionalDetails from "../../components/OptionalDetails.astro";
+import PracticeTask from "../../components/PracticeTask.astro";
+import QuestionList from "../../components/QuestionList.astro";
 import Quiz from "../../components/Quiz.astro";
 import ScreenshotPlaceholder from "../../components/ScreenshotPlaceholder.astro";
 import StateDiagram from "../../components/StateDiagram.astro";
 
-## なぜPushするのか
+## 今回の場面
 
 Commitした履歴は、まだ自分の端末内にしかありません。GitHub上でも確認・共有できるように、ローカルのCommitをリモートリポジトリへ送ります。この操作がPushです。
 
-## 操作前の状態
+## 今回できるようになること
+
+- CommitとPushの役割を区別できる
+- 未送信CommitをGitHubへPushできる
+- GitHubのWeb画面で送信結果を確認できる
+
+## まず簡単に説明
+
+Pushは、ローカルリポジトリで作った新しいCommitを、GitHub上の対応するBranchへ送る操作です。編集中のファイルを直接送るのではなく、Commit履歴を送ります。
+
+## もう少し正確に
+
+今回はローカルmainがGitHub上のmainより1つ進んでいます。`origin` へPushするとGitHub側のmainが同じCommitまで進みます。未Commit変更はPushの対象ではありません。
+
+<OptionalDetails summary="Push後にFetch originと表示される理由">
+  Push後は送るCommitがありません。GitHub
+  Desktopは、リモートに新しい履歴がないか確認するFetchを次の候補として表示します。Fetchは情報を取得しますが、作業フォルダへ内容を反映するPullとは異なります。
+</OptionalDetails>
+
+## 操作前
 
 ローカルのmainはGitHub上のmainよりCommitが1つ進んでいます。作業フォルダに未Commit変更はありません。
 
@@ -32,7 +62,7 @@ Commitした履歴は、まだ自分の端末内にしかありません。GitHu
   ]}
 />
 
-## 手順：Pushして確認する
+## 一緒に操作
 
 1. GitHub Desktop上部の **Push origin** を選びます。
 2. 処理が終わり、ボタンが **Fetch origin** に変わることを確認します。
@@ -57,9 +87,19 @@ Commitした履歴は、まだ自分の端末内にしかありません。GitHu
   variant="after"
 />
 
-## 操作後の状態
+## 操作直後の確認
 
 ローカルとGitHub上のmainが同じCommitを指しています。Pushは作業フォルダを編集する操作ではないため、端末内のファイル内容は変わりません。
+
+<CheckList
+  items={[
+    "GitHub Desktop上部がPush originからFetch originへ変わった",
+    "GitHub上のBranchがmainになっている",
+    "GitHub上の最新CommitがAdd practice noteである",
+    "GitHub上のREADMEに練習メモが表示される",
+    "GitHub DesktopのChangesは空のまま"
+  ]}
+/>
 
 <StateDiagram
   title="Push後"
@@ -79,16 +119,60 @@ Commitした履歴は、まだ自分の端末内にしかありません。GitHu
 
 Gitは `origin` と呼ばれるリモートへ、ローカルのmainにある新しいCommitを送信しました。GitHub側のmainが同じCommitまで進みました。
 
-<OptionalDetails summary="Fetch originと表示される理由">
-  Push後は送るCommitがありません。GitHub
-  Desktopは、リモートに新しい履歴がないか確認するFetchを次の候補として表示します。Fetchは情報を取得しますが、作業フォルダへ内容を反映するPullとは異なります。
-</OptionalDetails>
+## 初心者が迷いやすいポイント
 
-## よくある失敗
+<QuestionList
+  items={[
+    {
+      question: "Push originが表示されません。",
+      answer:
+        "まずHistoryに新しいCommitがあるか確認します。未Commit変更しかない場合はPushできません。現在のリポジトリとBranchも確認します。"
+    },
+    {
+      question: "Pushがエラーで止まりました。",
+      answer:
+        "何度も押す前に、ネットワーク、GitHubのサインイン状態、表示されたメッセージを確認します。エラーに秘密情報が含まれる場合は公開場所へ貼りません。"
+    },
+    {
+      question: "Pushすれば保存していない変更も送れますか？",
+      answer:
+        "送れません。Push対象はCommit済みの履歴です。未保存・未Commitの内容は作業フォルダ側に残ります。"
+    }
+  ]}
+/>
 
-ネットワークやサインインの問題でPushが完了しないことがあります。何度もボタンを押す前に、表示されたメッセージ、接続、GitHubアカウントを確認してください。エラーに秘密情報が含まれる場合は公開場所へ貼らないでください。
+## 自分でやってみる
+
+<PracticeTask title="ローカルとGitHubのCommitを照合する">
+  GitHub
+  DesktopのHistoryで最新Commitを選び、Summaryと変更ファイルを読みます。次にGitHub上のCommit一覧で同じSummaryを開き、`README.md`
+  の同じ追加行があることを確認してください。「ファイルが同じ」だけでなく「Commitが同じ」ことを確認します。
+</PracticeTask>
+
+## 確認問題
 
 <Quiz
+  kind="用語"
+  question="Pushが送るものはどれですか？"
+  options={["ローカルにある新しいCommit履歴", "端末内の全ファイル", "GitHubから取得した最新履歴"]}
+  answer={0}
+  explanation="PushはローカルBranchのCommit履歴を対応するリモートBranchへ送ります。"
+/>
+
+<Quiz
+  kind="状態判断"
+  question="Commit後・Push前のmainはどの状態ですか？"
+  options={[
+    "ローカルmainがGitHub上のmainより進んでいる",
+    "GitHub上のmainだけが進んでいる",
+    "どちらにも新しいCommitがない"
+  ]}
+  answer={0}
+  explanation="Commitでローカルだけが進み、PushでGitHub側が追いつきます。"
+/>
+
+<Quiz
+  kind="次の操作"
   question="GitHub上にCommitを反映したいとき、Commitの次に必要な操作はどれですか？"
   options={["Pull", "Push", "Clone"]}
   answer={1}
@@ -97,11 +181,24 @@ Gitは `origin` と呼ばれるリモートへ、ローカルのmainにある新
 
 ## 対応するGitコマンド
 
-作業フォルダで、ローカルmainに未送信Commitがある状態で実行します。成功するとリモートのmainが進みます。
+<CommandGuide
+  directory="git-guidebook-practice作業フォルダの中で実行します。"
+  prerequisite="ローカルmainにAdd practice note Commitがあり、GitHubへの認証とネットワーク接続が使えること。"
+  effect="ローカルmainの未送信Commitをoriginのmainへ送り、GitHub上の履歴を進めます。作業フォルダは編集しません。"
+  desktopEquivalent="GitHub Desktop上部のPush originを選ぶ操作です。"
+  output="main -> mainや送信したオブジェクト数が表示されれば完了です。Everything up-to-dateなら送るCommitはありません。"
+  firstCheck="認証エラーならアカウント、rejectedならリモート側に未取得履歴がないかを確認し、強制Pushはしません。"
+>
+  <pre>
+    <code>{`git push origin main`}</code>
+  </pre>
+</CommandGuide>
 
-```bash
-git push origin main
-```
+## できるようになったこと
+
+- PushがCommit履歴をGitHubへ送る操作だと説明できる
+- Push前後のローカルmainとGitHub上のmainを比較できる
+- GitHub上のCommitとREADMEを見て結果を確認できる
 
 ## 次のレッスンへ
 

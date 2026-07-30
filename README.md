@@ -11,9 +11,10 @@ Commitを「GitHubへのアップロード」と説明せず、毎回次の3つ�
 ## MVPの内容
 
 - Lesson 0〜11の実践カリキュラム
+- 各Lessonの場面、やさしい説明、正確な説明、実習、成功確認、自習、まとめ
 - 操作前後を比較する状態図
-- Tip、Warning、OptionalDetailsなどの再利用可能な教材部品
-- 回答後にフィードバックが出る確認問題
+- Tip、Warning、OptionalDetails、CheckList、PracticeTask、QuestionList、CommandGuideなどの再利用可能な教材部品
+- 用語・状態判断・次の操作の3種類の確認問題と回答後フィードバック
 - ブラウザ内だけに保存する学習完了チェック
 - 前後ナビゲーション、パンくず、コース内の現在位置
 - スクリーンショット未提供箇所の正式な代替ブロック
@@ -63,7 +64,7 @@ docs/                 # 要件、執筆基準、撮影依頼、完了報告
 
 ## 教材を編集する
 
-教材は `src/content/lessons/` のMDXです。frontmatterにはLesson番号、タイトル、説明、学習目標、公開状態が必要です。本文は [`docs/CONTENT_GUIDE.md`](docs/CONTENT_GUIDE.md) の標準構成に従います。
+教材は `src/content/lessons/` のMDXです。frontmatterにはLesson番号、タイトル、説明、学習目標、目安時間、前提、使う画面、任意コマンドの有無、公開状態が必要です。本文は [`docs/CONTENT_GUIDE.md`](docs/CONTENT_GUIDE.md) の13項目の標準構成に従います。
 
 画面画像が必要な位置には、架空のスクリーンショットを入れず `ScreenshotPlaceholder` を配置します。全必須項目を記入し、同じファイル名を [`docs/SCREENSHOT_REQUESTS.md`](docs/SCREENSHOT_REQUESTS.md) に登録してください。詳しいルールは [`docs/SCREENSHOT_PLACEHOLDER_SPEC.md`](docs/SCREENSHOT_PLACEHOLDER_SPEC.md) にあります。
 

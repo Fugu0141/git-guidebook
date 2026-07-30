@@ -1,0 +1,41 @@
+---
+interface Props {
+  directory: string;
+  prerequisite: string;
+  effect: string;
+  desktopEquivalent: string;
+  output: string;
+  firstCheck: string;
+}
+
+const { directory, prerequisite, effect, desktopEquivalent, output, firstCheck } = Astro.props;
+---
+
+<details class="command-guide">
+  <summary>任意：Gitコマンドでも確かめる</summary>
+  <div class="command-guide-body">
+    <dl>
+      <div>
+        <dt>実行する場所</dt>
+        <dd>{directory}</dd>
+      </div>
+      <div>
+        <dt>前提</dt>
+        <dd>{prerequisite}</dd>
+      </div>
+      <div>
+        <dt>何が起きるか</dt>
+        <dd>{effect}</dd>
+      </div>
+      <div>
+        <dt>GitHub Desktopとの対応</dt>
+        <dd>{desktopEquivalent}</dd>
+      </div>
+    </dl>
+    <div class="command-guide-code"><slot /></div>
+    <h3>結果の読み方</h3>
+    <p>{output}</p>
+    <h3>うまくいかないときの最初の確認</h3>
+    <p>{firstCheck}</p>
+  </div>
+</details>

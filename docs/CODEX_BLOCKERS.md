@@ -2,18 +2,16 @@
 
 実装と自動検証に未解決の技術的エラーはありません。次の項目は、外部権限、実画面、法的判断、利用者参加が必要なためCodexだけでは完了できません。
 
-## 1. GitHub Pagesの公開確認
+## 1. 今回の変更のGitHub Pages反映確認
 
-- 種別: 所有者権限
-- MVPへの影響: 公開URLでの完了ゲートは未通過
+- 種別: Pull RequestのMergeと公開後確認
+- 現在の状態: GitHub PagesのSourceはGitHub Actionsとして有効化済み。既存mainのデプロイ実績あり
+- 今回の変更への影響: このBranchをmainへMergeするまで教材深化版は公開されない
 - 必要な作業:
-  1. Draft Pull RequestをレビューしてmainへMergeする
-  2. **Settings → Pages → Source** を **GitHub Actions** にする
-  3. `Deploy Git Guidebook to Pages` workflowの成功を確認する
-  4. `https://fugu0141.github.io/git-guidebook/` で直接URL、再読み込み、404を確認する
-- Issue候補: `Enable and verify GitHub Pages deployment`
-
-Draft Pull Requestのままmainへ直接変更しない条件と、Pages設定に必要な所有者権限のため、Codexは公開完了まで進めません。
+  1. 今回のPull RequestをレビューしてmainへMergeする
+  2. `Deploy Git Guidebook to Pages` workflowの成功を確認する
+  3. `https://fugu0141.github.io/git-guidebook/` でホーム、一覧、Lessonの直接URL、再読み込み、404を確認する
+- Issue候補: `Verify expanded curriculum on GitHub Pages`
 
 ## 2. 初心者による利用テスト
 

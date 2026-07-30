@@ -19,7 +19,8 @@ const lessons = (await getCollection("lessons", ({ data }) => !data.draft)).sort
         <p class="eyebrow">Git初心者のための実践ガイド</p>
         <h1>Gitの操作を、<br /><span>「どこが変わるか」</span>から理解する。</h1>
         <p class="lead">
-          GitHub Desktopを使って、小さなプロジェクトを作るところから始めます。
+          プログラミング経験は不要です。GitHub
+          Desktopを使い、1つの練習用リポジトリを作るところから始めます。
           Commit・Push・Pullの違いを、作業フォルダ、ローカル、GitHubの状態で確かめましょう。
         </p>
         <div class="button-row">
@@ -28,7 +29,9 @@ const lessons = (await getCollection("lessons", ({ data }) => !data.draft)).sort
           >
           <a class="button secondary" href={withBase("lessons/")}>全レッスンを見る</a>
         </div>
-        <p class="hero-note">全12レッスン · プログラミング経験不要 · 自分のペースで学習</p>
+        <p class="hero-note">
+          全12レッスン · 1つのリポジトリで実習 · コマンド操作は任意 · 自分のペースで学習
+        </p>
       </div>
       <div class="hero-panel" aria-label="このコースで区別する3つの場所">
         <p class="panel-label">まず覚える3つの場所</p>
@@ -109,6 +112,41 @@ const lessons = (await getCollection("lessons", ({ data }) => !data.draft)).sort
         <strong>コマンドにつなげる</strong><span>最後に同じ操作を表すGitコマンドも紹介します。</span
         >
       </li>
+      <li>
+        <strong>迷ったら状態へ戻る</strong><span
+          >エラー時も変更を急いで消さず、現在の場所・Branch・履歴から次の一手を判断します。</span
+        >
+      </li>
     </ul>
+  </section>
+
+  <section class="future-courses section">
+    <div class="shell">
+      <div class="section-heading">
+        <p class="eyebrow">AFTER THE BASICS</p>
+        <h2>入門の先も、同じ状態の見方で学べます</h2>
+        <p>
+          まずGitHub
+          Desktopで仕組みを理解し、その後にコマンドライン、トラブル対応、チーム開発へ進む構成です。
+        </p>
+      </div>
+      <ul class="future-course-grid">
+        <li>
+          <span>次の候補 01</span>
+          <h3>GitHub DesktopからCLIへ</h3>
+          <p>画面で見てきた状態を、status・commit・push・pullなどの出力から読みます。</p>
+        </li>
+        <li>
+          <span>次の候補 02</span>
+          <h3>困ったときのGit</h3>
+          <p>間違ったBranch、拒否されたPush、競合などを、変更を失わずに調べます。</p>
+        </li>
+        <li>
+          <span>次の候補 03</span>
+          <h3>二人で使うGitHub</h3>
+          <p>Issue、レビュー、修正依頼、同時編集を通して共同作業の流れを学びます。</p>
+        </li>
+      </ul>
+    </div>
   </section>
 </BaseLayout>

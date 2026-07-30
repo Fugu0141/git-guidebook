@@ -1,0 +1,12 @@
+---
+interface Props {
+  items: string[];
+  label?: string;
+}
+
+const { items, label = "確認項目" } = Astro.props;
+---
+
+<ul class="check-list" aria-label={label}>
+  {items.map((item) => <li>{item}</li>)}
+</ul>

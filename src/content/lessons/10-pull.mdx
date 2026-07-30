@@ -5,20 +5,49 @@ description: "GitHub上で進んだmainの履歴を、端末内のローカルma
 goals:
   - "FetchとPullの違いを最小限説明できる"
   - "ローカルmainをGitHub上のmainと同期できる"
+duration: "15〜20分"
+prerequisite: "Lesson 9でPull RequestをmainへMerge済み"
+interfaces:
+  - "GitHub Desktop"
+  - "ファイル管理アプリ"
+  - "任意: ターミナル"
+commandOptional: true
 draft: false
 ---
 
 import Callout from "../../components/Callout.astro";
+import CheckList from "../../components/CheckList.astro";
+import CommandGuide from "../../components/CommandGuide.astro";
 import OptionalDetails from "../../components/OptionalDetails.astro";
+import PracticeTask from "../../components/PracticeTask.astro";
+import QuestionList from "../../components/QuestionList.astro";
 import Quiz from "../../components/Quiz.astro";
 import ScreenshotPlaceholder from "../../components/ScreenshotPlaceholder.astro";
 import StateDiagram from "../../components/StateDiagram.astro";
 
-## なぜPullするのか
+## 今回の場面
 
 前のレッスンで、GitHub上のmainをMergeによって進めました。端末内のローカルmainは、Web上の操作だけでは更新されません。GitHubの最新履歴を取得し、ローカルmainへ反映します。
 
-## 操作前の状態
+## 今回できるようになること
+
+- FetchとPullの違いを説明できる
+- 対象Branchと未Commit変更を確認してPullできる
+- 3つの場所が再びそろったことを確認できる
+
+## まず簡単に説明
+
+FetchはGitHub側の新しい履歴があるかを知る操作、Pullはその履歴を現在のローカルBranchへ取り込む操作です。Pull後は通常、作業フォルダのファイルも新しい内容になります。
+
+## もう少し正確に
+
+Pullはリモートの情報を取得したうえで、対応するリモートBranchの履歴を現在のローカルBranchへ統合します。今回はローカルmainに独自の変更がないため、GitHub上のmainと同じ地点まで安全に進めます。
+
+<OptionalDetails summary="Pull前に未Commit変更がある場合">
+  変更内容によってはPullを安全に実行できません。慌てて変更を捨てず、どのBranchにいて何が未Commitか確認します。本格的な競合解決は次期コースで扱います。
+</OptionalDetails>
+
+## 操作前
 
 GitHubのmainには学習目標がありますが、ローカルmainは1つ前のCommitを指しています。
 
@@ -32,7 +61,7 @@ GitHubのmainには学習目標がありますが、ローカルmainは1つ前�
   ]}
 />
 
-## 手順：mainへ切り替えてPullする
+## 一緒に操作
 
 1. GitHub Desktopの **Current Branch** から **main** を選びます。
 2. 未Commit変更がないことを確認します。
@@ -60,9 +89,19 @@ GitHubのmainには学習目標がありますが、ローカルmainは1つ前�
   variant="after"
 />
 
-## 操作後の状態
+## 操作直後の確認
 
 作業フォルダのREADME、ローカルmain、GitHub上のmainが同じ変更を含みます。一連の操作で3つの場所が再びそろいました。
+
+<CheckList
+  items={[
+    "Current Branchがmainである",
+    "GitHub DesktopのChangesが空である",
+    "HistoryにMerge後の最新履歴がある",
+    "作業フォルダのREADMEに学習目標がある",
+    "GitHub上のmainとローカルmainが同じ最新履歴を指す"
+  ]}
+/>
 
 <StateDiagram
   title="Pull後"
@@ -82,30 +121,87 @@ GitHubのmainには学習目標がありますが、ローカルmainは1つ前�
 
 FetchでGitHub上のmainの位置を知り、Pullでローカルmainをその位置まで進めました。今回はローカルmainに独自の変更がなかったため、一直線に最新地点へ進みました。
 
-<OptionalDetails summary="Pullの前に未Commit変更がある場合">
-  変更内容によってはPullを安全に実行できません。慌てて変更を捨てず、どのBranchにいて何が未Commitか確認します。本格的な競合解決は次期コースで扱います。
-</OptionalDetails>
+## 初心者が迷いやすいポイント
 
-## よくある失敗
+<QuestionList
+  items={[
+    {
+      question: "Fetchを押したのにREADMEが変わりません。",
+      answer:
+        "Fetchは新しい履歴の情報を確認する操作です。Pull originが表示されたら、対象Branchを確認してPullします。"
+    },
+    {
+      question: "Pullしたのにmainが最新になりません。",
+      answer:
+        "作業BranchのままPullした可能性があります。Current Branchがmainか確認し、履歴と未Commit変更を読みます。"
+    },
+    {
+      question: "未Commit変更がある状態でPullを求められました。",
+      answer:
+        "変更を捨てず、どのBranchの何を編集したか確認します。安全な保存方針が分からなければPullを止め、状況をメモして相談します。"
+    }
+  ]}
+/>
 
-作業BranchのままPullしてしまい、mainが更新されないことがあります。Current Branchをmainへ切り替えてから操作します。また、FetchだけでREADMEが変わるとは限りません。
+## 自分でやってみる
+
+<PracticeTask title="同期完了を3つの証拠で説明する">
+  作業フォルダのREADME、GitHub
+  DesktopのHistory、GitHub上のmainを順に開きます。それぞれで学習目標の行または最新Commitを確認し、「作業ファイル・ローカル履歴・リモート履歴がそろった」と説明してください。
+</PracticeTask>
+
+## 確認問題
 
 <Quiz
+  kind="用語"
+  question="FetchとPullの違いとして正しいものはどれですか？"
+  options={[
+    "Fetchは情報を取得し、PullはローカルBranchへ取り込む",
+    "FetchはCommitし、PullはPushする",
+    "どちらも作業フォルダを削除する"
+  ]}
+  answer={0}
+  explanation="Fetchはリモートの状態を知り、Pullはその履歴を現在のローカルBranchへ反映します。"
+/>
+
+<Quiz
+  kind="状態判断"
   question="GitHubの最新履歴を確認しただけで、作業フォルダへまだ反映していない操作はどれですか？"
   options={["Fetch", "Commit", "Push"]}
   answer={0}
   explanation="Fetchはリモートの情報を取得します。ローカルBranchへ反映するのはPullです。"
 />
 
+<Quiz
+  kind="次の操作"
+  question="GitHub上のmainが先に進み、ローカルmainに未Commit変更はありません。次に何をしますか？"
+  options={["mainでPull", "新しいCommitを空で作る", "強制Pushする"]}
+  answer={0}
+  explanation="対象のmainへ切り替え、FetchとPullでリモートの履歴を取り込みます。"
+/>
+
 ## 対応するGitコマンド
 
-作業フォルダでmainへ切り替え、未Commit変更がないことを確認します。Fetchは情報を取得し、Pullはリモートmainをローカルmainへ取り込みます。
-
-```bash
-git switch main
+<CommandGuide
+  directory="git-guidebook-practice作業フォルダの中で実行します。"
+  prerequisite="未Commit変更がなく、GitHub上のmainをMerge済みであること。"
+  effect="mainへ切り替え、GitHubの最新情報を取得し、origin/mainをローカルmainへ取り込みます。通常は作業フォルダも更新されます。"
+  desktopEquivalent="Current Branchでmainを選び、Fetch origin、Pull originの順に選ぶ操作です。"
+  output="Fast-forwardと更新ファイルが表示され、git statusでYour branch is up to dateなら同期済みです。"
+  firstCheck="Already up to dateなのに内容が違う場合は、現在のBranch、リモートURL、GitHub上でMergeしたBranchを確認します。"
+>
+  <pre>
+    <code>{`git switch main
 git fetch origin
-git pull origin main
-```
+git pull origin main`}</code>
+  </pre>
+</CommandGuide>
+
+## できるようになったこと
+
+- FetchとPullを区別し、mainを安全に最新化できる
+- Pull後に作業フォルダとローカル履歴が更新されると説明できる
+- 3つの場所が同じ状態へ戻ったことを証拠で確認できる
 
 ## 次のレッスンへ
 

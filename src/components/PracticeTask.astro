@@ -1,0 +1,15 @@
+---
+interface Props {
+  title?: string;
+}
+
+const { title = "まずは見本を閉じずに試しましょう" } = Astro.props;
+---
+
+<aside class="practice-task" aria-label={title}>
+  <p class="practice-task-title">
+    <span aria-hidden="true">✎</span>
+    {title}
+  </p>
+  <div><slot /></div>
+</aside>

@@ -5,20 +5,51 @@ description: "作業Branchの変更をmainへ取り込む提案を作り、差�
 goals:
   - "baseとcompareを正しく選べる"
   - "Pull RequestとMergeを区別できる"
+duration: "20〜30分"
+prerequisite: "Lesson 7の作業BranchをPublish済み"
+interfaces:
+  - "テキストエディター"
+  - "GitHub Desktop"
+  - "ブラウザ"
+  - "任意: ターミナル"
+commandOptional: true
 draft: false
 ---
 
 import Callout from "../../components/Callout.astro";
+import CheckList from "../../components/CheckList.astro";
+import CommandGuide from "../../components/CommandGuide.astro";
 import OptionalDetails from "../../components/OptionalDetails.astro";
+import PracticeTask from "../../components/PracticeTask.astro";
+import QuestionList from "../../components/QuestionList.astro";
 import Quiz from "../../components/Quiz.astro";
 import ScreenshotPlaceholder from "../../components/ScreenshotPlaceholder.astro";
 import StateDiagram from "../../components/StateDiagram.astro";
 
-## なぜPull Requestを作るのか
+## 今回の場面
 
 作業Branchで完成した変更を、基準のmainへ取り込む前に確認する場所が必要です。Pull Requestは「このBranchの変更をmainへ取り込みたい」という提案で、差分・理由・確認結果をまとめます。作成しただけではmainは変わりません。
 
-## 操作前の状態
+## 今回できるようになること
+
+- 作業Branchで変更をCommit・Pushできる
+- baseとcompareを正しく選べる
+- 差分と説明を確認してPull Requestを作れる
+- Pull Request作成とMergeを区別できる
+
+## まず簡単に説明
+
+Pull Requestは「この変更をmainへ取り込んでよいですか」と提案し、差分を確認するGitHub上のページです。作成した時点ではmainへ取り込まれません。
+
+## もう少し正確に
+
+baseは変更を受け取る側、compareは変更を持ってくる側です。今回はbaseがmain、compareが `add-learning-goal` です。Pull RequestはGitのCommitを新しく作る操作ではなく、2つのBranchの比較と会話をGitHub上に結び付けます。
+
+<OptionalDetails summary="説明欄に書くこと">
+  変更内容、変更した理由、確認方法、特に見てほしい点を書きます。一人開発でも未来の自分が意図を思い出せる記録になります。
+</OptionalDetails>
+
+## 操作前
 
 まず `add-learning-goal` BranchでREADMEに学習目標を追加し、Commit、Pushします。
 
@@ -37,7 +68,7 @@ import StateDiagram from "../../components/StateDiagram.astro";
   ]}
 />
 
-## 手順：提案を作る
+## 一緒に操作
 
 1. GitHub Desktopの **Create Pull Request** を選び、ブラウザを開きます。
 2. GitHub上で **base: main**、**compare: add-learning-goal** になっていることを確認します。
@@ -70,9 +101,19 @@ import StateDiagram from "../../components/StateDiagram.astro";
   baseは変更を受け取る側、この練習ではmainです。compareは変更を持ってくる側、この練習ではadd-learning-goalです。逆にすると意図した差分になりません。
 </Callout>
 
-## 操作後の状態
+## 操作直後の確認
 
 Pull Requestが作られましたが、mainはまだ進んでいません。作業BranchのCommitはそのまま残り、GitHub上に比較と会話のページが加わりました。
+
+<CheckList
+  items={[
+    "Pull Requestの状態がOpenになっている",
+    "baseがmain、compareがadd-learning-goalである",
+    "Files changedがREADMEの意図した1行追加だけである",
+    "タイトルと説明から変更理由と確認内容が分かる",
+    "GitHub上のmainはまだ変更前のまま"
+  ]}
+/>
 
 <StateDiagram
   title="Pull Request作成後"
@@ -88,30 +129,90 @@ Pull Requestが作られましたが、mainはまだ進んでいません。作�
 
 Gitの履歴そのものを進める操作ではなく、GitHub上にbaseとcompareの差分を結び付けたPull Requestが作られました。Mergeするまでは2つのBranchが別の地点を指します。
 
-<OptionalDetails summary="Pull Requestの説明に書くこと">
-  変更内容、変更した理由、確認方法、特に見てほしい点を書きます。一人開発でも未来の自分が意図を思い出せる記録になります。
-</OptionalDetails>
+## 初心者が迷いやすいポイント
 
-## よくある失敗
+<QuestionList
+  items={[
+    {
+      question: "baseとcompareの向きが分かりません。",
+      answer:
+        "baseは受け取る基準のmain、compareは変更を持つadd-learning-goalです。画面の矢印だけでなくFiles changedの内容で確認します。"
+    },
+    {
+      question: "Create Pull Requestが表示されません。",
+      answer:
+        "作業Branchの変更をCommitし、GitHubへPush済みか確認します。GitHub上のBranchにmainとの差分がなければ提案は作れません。"
+    },
+    {
+      question: "Files changedに関係ない変更があります。",
+      answer:
+        "Pull Requestを作らず、compare BranchとCommit履歴を確認します。分からない差分を含んだままMergeへ進みません。"
+    }
+  ]}
+/>
 
-Files changedを見ずに作成し、関係ない変更を含めることがあります。差分が想定より多いときは作成を止め、compare BranchとCommit内容を確認します。
+## 自分でやってみる
+
+<PracticeTask title="レビューする人の目線で説明を読み直す">
+  Pull
+  Requestの説明だけを読み、「何を変えたか」「なぜ変えたか」「何を確認したか」の3つに線を引いてください。欠けている項目があればEditで追記します。次にFiles
+  changedの各行を、意図した変更か自分の言葉で説明します。
+</PracticeTask>
+
+## 確認問題
 
 <Quiz
+  kind="用語"
+  question="Pull Requestとは何ですか？"
+  options={[
+    "Branchの変更を別のBranchへ取り込む提案と確認の場",
+    "端末へリポジトリを複製する操作",
+    "未Commit変更を自動保存する機能"
+  ]}
+  answer={0}
+  explanation="Pull RequestはGitHub上で差分を確認し、取り込みを提案する仕組みです。"
+/>
+
+<Quiz
+  kind="状態判断"
   question="Pull Requestを作成した直後、mainの履歴はどうなりますか？"
   options={["自動で進む", "Mergeするまで変わらない", "削除される"]}
   answer={1}
   explanation="Pull Requestは取り込みの提案です。実際にmainを進めるのはMergeです。"
 />
 
+<Quiz
+  kind="次の操作"
+  question="Files changedに意図しないファイルが見つかりました。次に何をしますか？"
+  options={["Mergeせず作業BranchのCommitを確認する", "そのままMergeする", "mainを削除する"]}
+  answer={0}
+  explanation="想定外の差分があるときは取り込みを止め、作業Branchの内容へ戻ります。"
+/>
+
 ## 対応するGitコマンド
 
-変更・Commit・Pushは作業フォルダで実行できます。Pull Request作成は基本Gitの機能ではなくGitHubの機能なので、このコースではWeb画面を使います。
+Pull Request作成はGitHubの機能です。次のコマンドは、その前提となる変更・Commit・Pushに対応します。
 
-```bash
-git add README.md
+<CommandGuide
+  directory="git-guidebook-practice作業フォルダの中で実行します。"
+  prerequisite="add-learning-goal Branchにいて、READMEの学習目標を保存済みであること。"
+  effect="READMEの変更を作業BranchへCommitし、対応するGitHub上のBranchへPushします。mainは変わりません。"
+  desktopEquivalent="ChangesでCommitし、Push originを選ぶ操作です。Pull Request自体はブラウザで作ります。"
+  output="Commit結果の後、Pushでadd-learning-goal -> add-learning-goalと表示されれば送信済みです。"
+  firstCheck="Push先がmainに見える場合は実行せず、現在のBranchを確認します。nothing to commitなら保存と差分を確認します。"
+>
+  <pre>
+    <code>{`git add README.md
 git commit -m "Add learning goal"
-git push
-```
+git push`}</code>
+  </pre>
+</CommandGuide>
+
+## できるようになったこと
+
+- baseとcompare、Pull RequestとMergeを区別できる
+- 変更理由と確認内容を添えて提案を作れる
+- Files changedに想定外があれば取り込み前に止まれる
 
 ## 次のレッスンへ
 
