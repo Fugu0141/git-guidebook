@@ -15,16 +15,40 @@ draft: false
 ---
 
 import Callout from "../../components/Callout.astro";
+import CheckList from "../../components/CheckList.astro";
+import CommandGuide from "../../components/CommandGuide.astro";
 import OptionalDetails from "../../components/OptionalDetails.astro";
+import PracticeTask from "../../components/PracticeTask.astro";
+import QuestionList from "../../components/QuestionList.astro";
 import Quiz from "../../components/Quiz.astro";
 import ScreenshotPlaceholder from "../../components/ScreenshotPlaceholder.astro";
 import StateDiagram from "../../components/StateDiagram.astro";
 
-## なぜMergeするのか
+## 今回の場面
 
 Pull Requestは提案を作る段階でした。差分が正しいと確認できたら、Mergeで作業Branchの変更をmainの履歴へ統合します。
 
-## 操作前の状態
+## 今回できるようになること
+
+- Merge前の安全確認を順番に行える
+- 作業Branchの変更をGitHub上のmainへ統合できる
+- MergeとBranch削除を別の操作として説明できる
+- Merge後もローカルmainが自動更新されないと判断できる
+
+## まず簡単に説明
+
+Mergeは、分けて進めた作業Branchの変更を、取り込み先のmainへ統合する操作です。Pull Requestを作っただけでは起きず、差分を確認してMergeを確定したときにmainが進みます。
+
+## もう少し正確に
+
+今回はGitHub上のPull RequestからMergeするため、GitHub上のmainが更新されます。端末内のローカルmainは別の場所にあるため、自動では進みません。
+
+<OptionalDetails summary="Merge方式について">
+  GitHubにはMerge commit、Squash and merge、Rebase and
+  mergeなどがあります。この教材ではリポジトリの既定のMerge方法を使います。履歴の作られ方の違いは次期コースで扱います。
+</OptionalDetails>
+
+## 操作前
 
 GitHub上では作業Branchがmainより進み、Pull RequestはOpenです。ローカルのmainはまだ変更前です。
 
@@ -38,7 +62,7 @@ GitHub上では作業Branchがmainより進み、Pull RequestはOpenです。ロ
   ]}
 />
 
-## 手順：確認してMergeする
+## 一緒に操作
 
 1. Pull Requestの **Files changed** で、READMEの1行追加だけが含まれることを再確認します。
 2. 会話画面に戻り、競合がなくMerge可能と表示されていることを確認します。
@@ -69,9 +93,19 @@ GitHub上では作業Branchがmainより進み、Pull RequestはOpenです。ロ
   baseがmainであること、意図したファイルだけが変わること、秘密情報がないことを確認します。分からない差分があればMergeしません。
 </Callout>
 
-## 操作後の状態
+## 操作直後の確認
 
 GitHub上のmainが作業Branchの変更を含む地点まで進みました。ただし、端末内のローカルmainは自動では進みません。この差を次のPullで解消します。
+
+<CheckList
+  items={[
+    "Pull Requestの状態がMergedになっている",
+    "GitHub上のmainでREADMEの学習目標を確認できる",
+    "意図したREADMEの変更だけが統合された",
+    "ローカルmainはまだMerge前の履歴である",
+    "Delete branchは統合とは別の後片付けである"
+  ]}
+/>
 
 <StateDiagram
   title="Merge後・Pull前"
@@ -87,30 +121,88 @@ GitHub上のmainが作業Branchの変更を含む地点まで進みました。�
 
 GitHub上でmainの履歴が更新され、Pull RequestはMergedとして閉じました。作業Branchを削除しても、mainへ統合されたCommitや変更は消えません。削除されるのは不要になったBranch名です。
 
-<OptionalDetails summary="Merge方式について">
-  GitHubにはMerge commit、Squash and merge、Rebase and
-  mergeなどがあります。この教材ではリポジトリの既定のMerge方法を使います。違いの詳しい説明はMVPの範囲外です。
-</OptionalDetails>
+## 初心者が迷いやすいポイント
 
-## よくある失敗
+<QuestionList
+  items={[
+    {
+      question: "Mergeボタンが押せません。",
+      answer:
+        "競合、必須レビュー、チェック失敗、権限などの表示を読みます。理由を無視して別の方法で強制せず、リポジトリのルールに従います。"
+    },
+    {
+      question: "Delete branchを押すと、mainへ入れた変更も消えますか？",
+      answer:
+        "消えません。統合済みのCommitや変更はmainに残ります。削除するのは不要になったBranch名です。"
+    },
+    {
+      question: "Merge後に端末のREADMEが変わりません。",
+      answer:
+        "正常です。今回変わったのはGitHub上のmainです。次にローカルmainへ切り替えてPullします。"
+    }
+  ]}
+/>
 
-Mergeが終わると端末内も更新されたと思い込むことがあります。Web上の操作はGitHub側で起きています。ローカルmainへ切り替え、Pullするまで端末側のmainは古いままです。
+## 自分でやってみる
+
+<PracticeTask title="Merge後の2つのmainを比較する">
+  ブラウザでGitHub上のmainのREADMEを開き、学習目標があることを確認します。次にGitHub
+  Desktopのmainへ切り替えてHistoryを見ます。まだPullしていないので、2つのmainが異なる理由を「GitHub上でだけMergeしたから」と説明してください。
+</PracticeTask>
+
+## 確認問題
 
 <Quiz
+  kind="用語"
+  question="Mergeの役割はどれですか？"
+  options={[
+    "分かれた履歴を取り込み先Branchへ統合する",
+    "リポジトリを端末へ複製する",
+    "未Commit変更を選ぶ"
+  ]}
+  answer={0}
+  explanation="Mergeは作業Branchの変更をmainなどの取り込み先へ統合します。"
+/>
+
+<Quiz
+  kind="状態判断"
   question="GitHub上でMergeした直後、ローカルmainはどうなっていますか？"
   options={["自動で最新になる", "通常は古いままで、Pullが必要", "ローカルリポジトリが削除される"]}
   answer={1}
   explanation="MergeはGitHub上で行いました。端末へ反映する操作がPullです。"
 />
 
+<Quiz
+  kind="次の操作"
+  question="GitHub上のmainだけがMerge後の状態です。端末のmainを最新にする次の操作はどれですか？"
+  options={["mainへ切り替えてPull", "同じPull Requestをもう一度作る", "Clone先を削除する"]}
+  answer={0}
+  explanation="リモートで進んだ履歴をローカルmainへ取り込むにはPullします。"
+/>
+
 ## 対応するGitコマンド
 
-このレッスンではGitHub上のPull RequestをMergeしました。同じリポジトリ内での基本的なMergeは、取り込み先Branchへ切り替えて実行しますが、今回は参考だけにします。
+このレッスンの本線はGitHub上のPull RequestからのMergeです。次はローカルだけで同じBranchを統合する参考例で、今回は実行しません。
 
-```bash
-git switch main
-git merge add-learning-goal
-```
+<CommandGuide
+  directory="git-guidebook-practice作業フォルダ内ですが、この教材の手順では実行しません。"
+  prerequisite="ローカルにmainとadd-learning-goalがあり、未Commit変更がなく、統合方法を理解していること。"
+  effect="ローカルmainへ作業Branchの履歴を統合します。GitHub上のPull RequestをMergedにする操作ではありません。"
+  desktopEquivalent="今回のGitHub上のMerge pull requestとは実行場所が異なるため、完全な1対1対応ではありません。"
+  output="Already up to dateまたは更新したファイル数が表示されます。競合表示が出た場合は自動統合されていません。"
+  firstCheck="実行前に現在のBranchと未Commit変更を確認します。競合が出たら追加コマンドを推測せず、状態を記録して止まります。"
+>
+  <pre>
+    <code>{`git switch main
+git merge add-learning-goal`}</code>
+  </pre>
+</CommandGuide>
+
+## できるようになったこと
+
+- 差分と取り込み先を確認してPull RequestをMergeできる
+- Branch削除は統合済み変更を消す操作ではないと説明できる
+- Web上のMerge後はGitHub上のmainだけが先に進むと判断できる
 
 ## 次のレッスンへ
 

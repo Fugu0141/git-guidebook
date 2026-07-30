@@ -49,8 +49,8 @@ test("Lesson 0から11までが連番で公開される", async () => {
   }
 });
 
-test("Lesson 0から2は実践教材の標準構成を満たす", async () => {
-  const lessons = (await lessonSources()).slice(0, 3);
+test("全Lessonが実践教材の標準構成を満たす", async () => {
+  const lessons = await lessonSources();
   for (const { name, source } of lessons) {
     for (const section of exemplarSections) {
       assert.ok(source.includes(section), `${name} に ${section} がありません`);
@@ -71,10 +71,7 @@ test("各Lessonに状態図、確認問題、コマンド補足がある", async
   for (const { name, source } of lessons) {
     assert.ok(source.includes("<StateDiagram"), `${name} に状態図がありません`);
     assert.ok(source.includes("<Quiz"), `${name} に確認問題がありません`);
-    assert.ok(
-      source.includes("```bash") || source.includes("対応する基本Gitコマンドはありません"),
-      `${name} にコマンド補足がありません`
-    );
+    assert.ok(source.includes("<CommandGuide"), `${name} にコマンド補足がありません`);
   }
 });
 

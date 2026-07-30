@@ -17,15 +17,39 @@ draft: false
 ---
 
 import Callout from "../../components/Callout.astro";
+import CheckList from "../../components/CheckList.astro";
+import CommandGuide from "../../components/CommandGuide.astro";
 import OptionalDetails from "../../components/OptionalDetails.astro";
+import PracticeTask from "../../components/PracticeTask.astro";
+import QuestionList from "../../components/QuestionList.astro";
 import Quiz from "../../components/Quiz.astro";
 import StateDiagram from "../../components/StateDiagram.astro";
 
-## なぜ最終課題を行うのか
+## 今回の場面
 
 ボタンの場所を暗記できたかではなく、現在の状態から次の操作を判断できるか確かめます。分からなくなったら、作業フォルダ・ローカルリポジトリ・リモートリポジトリのどこが進んでいるかを書き出してください。
 
-## 操作前の状態
+## 今回できるようになること
+
+- リポジトリ作成からPullまでを自力で再現できる
+- 各操作の前後で3つの場所を確認できる
+- 迷ったときに状態から次の操作を判断できる
+- 分からない状態で変更を消さず、安全に止まれる
+
+## まず簡単に説明
+
+新しい練習用リポジトリで、これまでの基本サイクルをもう一度行います。手順を暗記していなくても、「いま何がどこにあるか」を確認し、次に進めたい場所を決められれば合格です。
+
+## もう少し正確に
+
+基本サイクルでは、編集が作業フォルダを、Commitがローカル履歴を、PushがGitHub上の履歴を進めます。Branchで進む先を分け、Pull Requestで提案し、Mergeでmainへ統合し、Pullで端末側を追いつかせます。
+
+<OptionalDetails summary="困ったときの状態確認">
+  `現在のリポジトリ`、`現在のBranch`、`未Commit変更`、`ローカルとGitHubのどちらが先か`
+  の4項目を書きます。状態が説明できない間は、変更の破棄、強制Push、フォルダ削除を行いません。
+</OptionalDetails>
+
+## 操作前
 
 新しい練習用リポジトリを使います。実在する仕事や授業のリポジトリでは行わないでください。
 
@@ -39,7 +63,7 @@ import StateDiagram from "../../components/StateDiagram.astro";
   ]}
 />
 
-## 課題：基本サイクルを再現する
+## 一緒に操作
 
 次のチェックポイントを、前のレッスンを必要なときだけ見ながら進めます。
 
@@ -59,9 +83,20 @@ import StateDiagram from "../../components/StateDiagram.astro";
   いまどのBranchにいるか。未Commit変更はあるか。ローカルとGitHubのどちらの履歴が先に進んでいるか。この3つを確認すると、次の操作を絞れます。
 </Callout>
 
-## 操作後の状態
+## 操作直後の確認
 
 3つの場所が同じ最新履歴を持ち、mainには最終課題の目標と振り返りが含まれています。
+
+<CheckList
+  items={[
+    "GitHub DesktopのCurrent Branchがmainである",
+    "Changesに未Commit変更がない",
+    "作業フォルダのREADMEに目標と振り返りがある",
+    "ローカルmainのHistoryにMerge後の履歴がある",
+    "GitHub上のmainに同じREADMEと履歴がある",
+    "各操作が変えた場所を自分の言葉で説明できる"
+  ]}
+/>
 
 <StateDiagram
   title="最終課題の完成状態"
@@ -94,16 +129,60 @@ import StateDiagram from "../../components/StateDiagram.astro";
   push → pull` と対応します。Pull Requestの作成とWeb上のMergeはGitHubの機能です。
 </OptionalDetails>
 
-## よくある失敗と戻り方
+## 初心者が迷いやすいポイント
 
-- GitHubに見えない: Commit後ならPushしたか確認します。
-- Commitできない: 保存済みの変更と選択対象があるか確認します。
-- mainが最新でない: Current Branchをmainにし、FetchとPullを確認します。
-- 差分が想定外: 操作を進めず、現在のリポジトリ、Branch、Changesを確認します。
+<QuestionList
+  items={[
+    {
+      question: "CommitしたのにGitHubで見えません。",
+      answer:
+        "HistoryにCommitがあることを確認し、Push前か判断します。Commitをやり直すのではなく、ローカルとGitHubのどちらが先かを見ます。"
+    },
+    {
+      question: "mainが最新になりません。",
+      answer: "Current Branchがmainか、GitHub上でMerge済みか、Fetch後にPullしたかを順に確認します。"
+    },
+    {
+      question: "差分が想定と違い、戻し方が分かりません。",
+      answer:
+        "変更を消す操作は急ぎません。リポジトリ名、Branch、Changes、直前の操作をメモし、安全な相談材料を作ります。秘密情報は共有しません。"
+    }
+  ]}
+/>
 
-変更を消す操作は急いで行いません。現在地を確認し、必要なら状況をメモして経験者へ相談します。
+## 自分でやってみる
+
+<PracticeTask title="手順を見ずに次の操作を判断する">
+  次の3状態について、次の操作と理由を書いてください。
+
+1. READMEを保存したがChangesに未Commitで残っている
+2. Historyに新しいCommitがあり、GitHubにはまだ見えない
+3. GitHub上でMerge済みだが、ローカルmainが古い
+
+答えは、差分確認してCommit、Push、mainでPullです。操作名だけでなく「どの場所を進めたいからか」も書ければ完了です。
+
+</PracticeTask>
+
+## 確認問題
 
 <Quiz
+  kind="用語"
+  question="ローカルの変更を履歴として記録する操作はどれですか？"
+  options={["Commit", "Push", "Pull"]}
+  answer={0}
+  explanation="Commitは選んだ変更をローカルリポジトリへ記録します。"
+/>
+
+<Quiz
+  kind="状態判断"
+  question="READMEを保存し、CommitもPushもしていません。新しい内容がある場所はどこですか？"
+  options={["作業フォルダだけ", "GitHub上だけ", "ローカル履歴とGitHub"]}
+  answer={0}
+  explanation="保存直後の未Commit変更は作業フォルダにあります。"
+/>
+
+<Quiz
+  kind="次の操作"
   question="GitHub上でPull RequestをMergeした後、端末内のmainを最新にする操作はどれですか？"
   options={["Commit", "Pull", "Publish branch"]}
   answer={1}
@@ -112,10 +191,16 @@ import StateDiagram from "../../components/StateDiagram.astro";
 
 ## 対応するGitコマンド
 
-作業フォルダで、各段階の状態を確認しながら実行します。`USER`とURLは自分の教材用リポジトリへ置き換えます。
-
-```bash
-git clone https://github.com/USER/git-guidebook-challenge.git
+<CommandGuide
+  directory="最初のcloneは親フォルダ、その後は作成されたgit-guidebook-challenge作業フォルダ内で実行します。"
+  prerequisite="各段階で現在のBranch、差分、リモートの状態を確認できること。URLのUSERは自分の教材用アカウントへ置き換えます。"
+  effect="Clone、2回のCommitとPush、Branch作成とPublish、最後のPullまでを再現します。Pull Request作成とWeb上のMergeはブラウザで行います。"
+  desktopEquivalent="Lesson 3〜10で行ったGitHub Desktopの操作を、同じ順序でコマンドへ置き換えた流れです。"
+  output="各Commit後はworking tree clean、Push後は対応Branch名、最後のPull後はup to dateを確認します。"
+  firstCheck="エラー時は次のコマンドへ進まず、pwd、git status、git branch --show-currentで場所・状態・Branchを確認します。"
+>
+  <pre>
+    <code>{`git clone https://github.com/USER/git-guidebook-challenge.git
 git add README.md
 git commit -m "Add final challenge goal"
 git push origin main
@@ -125,9 +210,16 @@ git add README.md
 git commit -m "Add reflection"
 git push
 git switch main
-git pull origin main
-```
+git pull origin main`}</code>
+  </pre>
+</CommandGuide>
 
-## コース修了
+## できるようになったこと
 
-お疲れさまでした。操作名が思い出せないときも、「いま何がどこにあり、どこを進めたいか」を確認できれば、次の一手を判断できます。これがGitを安全に使い続ける土台です。
+- リポジトリ作成からPullまでの基本サイクルを再現できる
+- 操作前後で作業フォルダ、ローカル、GitHubの状態を説明できる
+- 状態から次の操作を選び、危険な操作の前に止まれる
+
+## 次のレッスンへ
+
+これで入門コースは修了です。次はコマンドラインで同じ状態を読むコース、競合と復旧を安全に練習するコース、チーム開発のレビューフローへ進めます。操作名を忘れても、「いま何がどこにあり、どこを進めたいか」を確認できる力が土台になります。
