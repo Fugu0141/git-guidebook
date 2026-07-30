@@ -5,85 +5,184 @@ description: "3つの道具と、ローカル・リモートの役割を混同�
 goals:
   - "Git、GitHub、GitHub Desktopの役割を区別できる"
   - "作業フォルダ、ローカル、リモートを説明できる"
+duration: "15〜20分"
+prerequisite: "Lesson 0を読了"
+interfaces:
+  - "GitHub Desktop"
+  - "ブラウザ"
+  - "任意: ターミナル"
+commandOptional: true
 draft: false
 ---
 
 import Callout from "../../components/Callout.astro";
+import CheckList from "../../components/CheckList.astro";
+import CommandGuide from "../../components/CommandGuide.astro";
 import OptionalDetails from "../../components/OptionalDetails.astro";
+import PracticeTask from "../../components/PracticeTask.astro";
+import QuestionList from "../../components/QuestionList.astro";
 import Quiz from "../../components/Quiz.astro";
 import StateDiagram from "../../components/StateDiagram.astro";
 
-## なぜ3つを区別するのか
+## 今回の場面
 
-Gitの学習では、GitとGitHubが同じものに見えやすくなります。しかし、どこに履歴があるか分からないと「CommitしたのにGitHubで見えない」と迷います。まず役割を分けましょう。
+GitHub DesktopでCommitボタンを押したのに、ブラウザでGitHubを開くと変更が見つからない。初心者がよく出会う場面です。これは失敗とは限りません。Git、GitHub、GitHub Desktopの役割と、3つの場所を混同していると起きる迷いです。
 
-## 3つの登場人物
+今回はまだ練習用リポジトリを作りません。道具を開いて「いま見ているのは端末側か、GitHub側か」を見分ける練習をします。
 
-| 名前           | 役割                                 | 動く場所       |
-| -------------- | ------------------------------------ | -------------- |
-| Git            | ファイルの変更履歴を管理する仕組み   | 主に自分の端末 |
-| GitHub         | リポジトリを置き、共有できるサービス | Web上          |
-| GitHub Desktop | Gitを画面から操作するアプリ          | 自分の端末     |
+## 今回できるようになること
 
-GitHub DesktopはGitの状態を見やすくし、ボタン操作をGitへ伝えます。GitそのものやGitHubの代わりではありません。
+- Git、GitHub、GitHub Desktopの役割を自分の言葉で説明できる
+- 作業フォルダ、ローカルリポジトリ、GitHub上のリモートリポジトリを区別できる
+- CommitとPushが変える場所を正しく選べる
 
-<Callout type="tip" title="ローカルとリモート">
-  ローカルは自分の端末側、リモートはネットワーク上の相手側です。このコースのリモートはGitHub上のリポジトリです。
+## まず簡単に説明
+
+| 名前           | ひとことで言うと                     | 主に動く場所 |
+| -------------- | ------------------------------------ | ------------ |
+| Git            | ファイルの変更履歴を管理する仕組み   | 自分の端末   |
+| GitHub         | リポジトリを置いて共有できるサービス | Web上        |
+| GitHub Desktop | Gitの状態確認と操作を行う画面アプリ  | 自分の端末   |
+
+<Callout type="tip" title="GitHub Desktopは中継役">
+  GitHub
+  Desktopは、作業フォルダの差分やローカルの履歴を見せ、ボタン操作をGitへ伝えます。必要なときはGitHubとも通信しますが、GitそのものでもGitHubそのものでもありません。
 </Callout>
 
-## 操作前の状態
+## もう少し正確に
 
-まだ練習用リポジトリはありません。GitHub Desktopをインストールしてサインインしていても、学習用の履歴は作られていません。
+「ローカル」は自分の端末側、「リモート」はネットワーク上の相手側を表します。このコースでは、GitHub上のリポジトリをリモートリポジトリとして使います。
+
+<OptionalDetails summary="リポジトリには何が入る？">
+  リポジトリは、プロジェクトのファイルとGitの履歴を管理する単位です。端末側では作業フォルダの中にGitが使う隠し領域があり、そこがローカルリポジトリの履歴を支えます。GitHub上のリポジトリには、PushされていないCommitや作業中の未Commit変更はありません。
+</OptionalDetails>
+
+## 操作前
+
+GitHub Desktopをインストールしてサインインしていても、それだけでは今回の練習用リポジトリや履歴は作られていません。
 
 <StateDiagram
-  title="役割の関係"
-  caption="GitHub DesktopからGitを操作し、必要なときだけGitHubと通信する"
+  title="3つの場所と道具の関係"
+  caption="GitHub Desktopから端末内のGitを操作し、必要なときだけGitHubと通信する"
   states={[
-    { label: "作業フォルダ", detail: "ファイルを開いて編集する" },
-    { label: "Git + ローカル", detail: "端末内の履歴を管理する" },
-    { label: "GitHub", detail: "リモートの履歴を保管する" }
+    { label: "作業フォルダ", detail: "エディターでファイルを開いて保存する" },
+    { label: "Git + ローカル", detail: "端末内の履歴をCommitする" },
+    { label: "GitHub", detail: "Pushされたリモート履歴を保管する" }
   ]}
 />
 
-## 手順：自分の言葉で言い換える
+## 一緒に操作
 
-次の文を声に出すか、メモしてください。
+1. GitHub Desktopを開きます。まだ教材用リポジトリがなくても構いません。
+2. 画面上部にリポジトリ名やCurrent Branchを表示する場所があることを確認します。これは端末側で現在選んでいるローカルリポジトリとBranchの情報です。
+3. ブラウザで [GitHub](https://github.com/) を開きます。こちらはGitHubというWebサービスの画面です。
+4. 次の文を、画面を指しながら声に出すかメモします。
+   - Gitは、端末内を中心に変更履歴を管理する仕組み。
+   - GitHubは、リモートリポジトリを置いて共有するWebサービス。
+   - GitHub Desktopは、Gitの状態を見て操作するためのアプリ。
+5. 「Commitはローカルを変える」「PushはGitHub上のリモートを進める」と書き足します。
 
-- Gitは、端末内を中心に変更履歴を管理する仕組みです。
-- GitHubは、リモートリポジトリを置いて共有するWebサービスです。
-- GitHub Desktopは、Gitを画面から操作するためのアプリです。
+サインインしていない場合は、今回は画面の違いを確認するだけで構いません。アカウント作成や認証情報の入力を急いで進める必要はありません。
 
-## 操作後の状態
+## 操作直後の確認
 
-ファイルや履歴はまだ変わりません。ただし、次のレッスンから画面を見たときに「いまGitHubを操作している」「いま端末内のGitを操作している」と区別できます。
+<CheckList
+  items={[
+    "GitHub DesktopとGitHubのブラウザ画面を別のものとして指し示せる",
+    "作業フォルダはファイルを編集する場所だと説明できる",
+    "Commitは端末内のローカルリポジトリへ履歴を作る操作だと説明できる",
+    "Pushして初めて、ローカルの新しいCommitがGitHub上へ届くと説明できる"
+  ]}
+/>
 
-## 内部で起きたこと
+このレッスンではファイルも履歴も変更していません。変わったのは、画面を見たときに現在地を判断するための見方です。
 
-このレッスンも概念の準備です。GitHub DesktopでCommitするとローカルリポジトリが変わり、Pushするとリモートリポジトリが変わる、という違いが今後の軸になります。
+## 初心者が迷いやすいポイント
 
-<OptionalDetails summary="リポジトリとは">
-  リポジトリは、プロジェクトのファイルとGitの履歴を管理する単位です。作業フォルダの中には通常、Gitが使う隠し領域もあります。GitHub上のリポジトリには作業中の未Commit変更はありません。
-</OptionalDetails>
+<QuestionList
+  items={[
+    {
+      question: "GitHub Desktopに変更が見えたら、GitHubへ送信済みですか？",
+      answer:
+        "いいえ。Changesに見える内容は、まだ作業フォルダだけにある未Commit変更かもしれません。Commit後でもPush前なら新しい履歴はローカルだけです。"
+    },
+    {
+      question: "GitHubのアカウントがないとGitは使えませんか？",
+      answer:
+        "Gitは端末内だけでも使えます。GitHubはリモートで共有するときに利用する別サービスです。このコースでは一連の流れを学ぶため両方を使います。"
+    },
+    {
+      question: "ローカルリポジトリと作業フォルダは同じですか？",
+      answer:
+        "同じ端末内にありますが役割が違います。作業フォルダには編集中のファイルがあり、ローカルリポジトリにはCommitした履歴があります。"
+    }
+  ]}
+/>
 
-## よくある失敗
+## 自分でやってみる
 
-GitHub Desktopにファイルが見えるので「GitHubにアップロード済み」と思うことがあります。画面に見えている変更がまだCommit前なら作業フォルダだけ、Commit後でもPush前ならローカルだけにあります。
+<PracticeTask title="5つの出来事を場所ごとに分類する">
+  次の出来事を「作業フォルダ」「ローカルリポジトリ」「GitHub上のリモートリポジトリ」のどこで起きるか分類してください。
+
+1. エディターでREADMEを保存する
+2. GitHub DesktopでCommitする
+3. GitHub DesktopでPushする
+4. ブラウザでGitHub上のREADMEを見る
+5. 未Commitの行差分を見る
+
+答えは順に、作業フォルダ、ローカルリポジトリ、リモートリポジトリ、リモートリポジトリ、作業フォルダと記録済み内容の比較です。
+
+</PracticeTask>
+
+## 確認問題
 
 <Quiz
-  question="GitHub DesktopでCommitした直後、Pushしていない履歴はどこにありますか？"
-  options={["GitHub上だけ", "ローカルリポジトリだけ", "作業フォルダにもGitHubにもない"]}
+  kind="用語"
+  question="GitHub Desktopの役割として正しいものはどれですか？"
+  options={[
+    "Gitの状態を画面で確認し、操作するためのアプリ",
+    "GitHub上のリモートリポジトリそのもの",
+    "文章を編集するためのエディター"
+  ]}
+  answer={0}
+  explanation="GitHub DesktopはGitの状態を可視化し、操作を伝えるデスクトップアプリです。"
+/>
+
+<Quiz
+  kind="状態判断"
+  question="GitHub DesktopでCommitした直後、まだPushしていない新しい履歴はどこにありますか？"
+  options={["GitHub上だけ", "ローカルリポジトリだけ", "作業フォルダにも履歴にもない"]}
   answer={1}
-  explanation="Commitは端末内のローカルリポジトリへ履歴を記録します。GitHubへ送るのはPushです。"
+  explanation="Commitは端末内のローカルリポジトリへ履歴を記録します。"
+/>
+
+<Quiz
+  kind="次の操作"
+  question="ローカルでCommitした履歴をGitHub上でも確認したいとき、次に必要な操作はどれですか？"
+  options={["Push", "Commitをもう一度行う", "ファイル名を変更する"]}
+  answer={0}
+  explanation="Pushがローカルの新しいCommitをGitHub上のリモートへ送ります。"
 />
 
 ## 対応するGitコマンド
 
-役割を確認するだけなので、まだコマンドは不要です。端末内にGitが入っているかを確認するときは、任意のフォルダで `git --version` を実行できます。このコマンドはファイルや履歴を変更しません。
+<CommandGuide
+  directory="どのフォルダでも実行できます。"
+  prerequisite="Gitがインストールされていること。リポジトリやGitHubアカウントは不要です。"
+  effect="Gitのバージョン情報を表示します。3つの場所のどれも変更しません。"
+  desktopEquivalent="GitHub Desktopが利用するGitを、ターミナルから呼び出せるか確かめる補助確認です。"
+  output="git version に続いて番号が表示されれば成功です。バージョン番号が教材と違っても問題ありません。"
+  firstCheck="コマンドが見つからない場合は、GitHubへのサインインではなくGitのインストール状況とターミナルの再起動を確認します。"
+>
+  ```bash git --version ```
+</CommandGuide>
 
-```bash
-git --version
-```
+## できるようになったこと
+
+- Git、GitHub、GitHub Desktopを別の役割として説明できる
+- 作業フォルダ、ローカルリポジトリ、GitHub上のリモートリポジトリを区別できる
+- Commit後にGitHubで見えなくても、すぐ失敗と決めつけずPush前か判断できる
 
 ## 次のレッスンへ
 
-次はGitHub上に、練習用のリモートリポジトリを作ります。
+次はブラウザでGitHubを操作し、これから育てる `git-guidebook-practice` リモートリポジトリを作ります。

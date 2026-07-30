@@ -9,6 +9,10 @@ const lessons = defineCollection({
     title: z.string(),
     description: z.string(),
     goals: z.array(z.string()).min(1),
+    duration: z.string(),
+    prerequisite: z.string(),
+    interfaces: z.array(z.string()).min(1),
+    commandOptional: z.boolean(),
     draft: z.boolean()
   })
 });
